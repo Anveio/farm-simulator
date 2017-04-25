@@ -12,26 +12,32 @@ export default class App extends React.Component<any, any>{
 
 const Game = () => {
   return(
-    <div>
-      <Farm farmRows={1} farmColumns={1} />
+    <div className="container">
+      <Farm farmRows={5} farmColumns={3} />
     </div>
   )
 }
 
 interface FarmProps { farmColumns: number; farmRows: number; }
 const Farm = (props: FarmProps) => {
-  let rows = [];
-    for(let i=0; i < props.farmRows; i++){
-      for(let j=0; j < props.farmColumns; j++){
-        rows.push(
-          <li><Tile key={[i,j].toString()}/></li>
-        )
-      }
-    }
+  let row = [];
+  let farmGrid = []
+  for(let i = 0; i < props.farmRows; i++){
+    row.push(
+      <li><Tile key={i}/></li>
+    )
+  }
+
+  for(let j = 0; j < props.farmColumns; j++){
+    farmGrid.push(
+      <div key={j}>{row}</div>
+    )
+  }
+
 
   return (
     <ul className="tile-container">
-      {rows}
+      {farmGrid}
     </ul>
   )
 }
