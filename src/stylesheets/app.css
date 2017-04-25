@@ -1,0 +1,27 @@
+h1 {
+  text-align: center;
+}
+
+.menu {
+  max-width: 300px;
+  max-height: 900px;
+  border: 3px dashed black;
+}
+
+.tile-container {
+  display: flex;
+  max-width: 500px;
+  max-height: 500px;
+}
+
+.tile {
+  background-color: brown;
+  border: 1px solid black;
+  font-size: 25px;
+  height: 3em;
+  width: 3em;
+}
+
+li {
+  list-style: none;
+}
