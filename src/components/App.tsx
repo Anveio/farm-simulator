@@ -13,37 +13,61 @@ export default class App extends React.Component<any, any>{
 const Game = () => {
   return(
     <div className="container">
-      <Farm farmRows={5} farmColumns={3} />
+      <Farm farmRows={5} farmColumns={3} />  
     </div>
   )
 }
 
 interface FarmProps { farmColumns: number; farmRows: number; }
 const Farm = (props: FarmProps) => {
-  let row = [];
-  let farmGrid = []
-  for(let i = 0; i < props.farmRows; i++){
-    row.push(
-      <li><Tile key={i}/></li>
-    )
-  }
+  const createFarmGrid = () => {
+    let row = [];
+    let farmGrid = [];
+    for(let i = 0; i < props.farmRows; i++){
+      row.push(
+        <li><Tile key={i} onMouseOver={console.log("hello")}/></li>
+      )
+    }
 
-  for(let j = 0; j < props.farmColumns; j++){
-    farmGrid.push(
-      <div key={j}>{row}</div>
-    )
+    for(let j = 0; j < props.farmColumns; j++){
+      farmGrid.push(
+        <ul key={j} className="farm-column">{row}</ul>
+      )
+    }
+
+    return farmGrid;
   }
 
 
   return (
     <ul className="tile-container">
-      {farmGrid}
+      {createFarmGrid()}
     </ul>
   )
 }
 
-const Tile = () => {
-  return(
-    <div className="tile"></div>
-  )
+
+interface TileState { mouseHover: boolean; mouseDown: boolean }
+class Tile extends React.Component<any, TileState> {
+  constructor(props: any){
+    super(props)
+    this.state = {
+      mouseHover: false,
+      mouseDown: false
+    }
+  }
+
+  handleMouseHover = (e: React.MouseEvent<HTMLDivElement>):void => {
+    e.preventDefault();
+    console.log("Hovering");
+    this.setState( {
+      mouseHover: true
+    })
+  }
+
+  render() {
+    return(
+      <div className="tile" onMouseOver={this.handleMouseHover}></div>
+    )
+  }
 }
