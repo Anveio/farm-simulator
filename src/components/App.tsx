@@ -41,25 +41,32 @@ class MoneyCounter extends React.Component<any, MoneyCounterState> {
 }
 
 interface FarmProps { farmColumns: number; farmRows: number; }
-class Farm extends React.Component<FarmProps, any> {
+interface FarmState { mouseHover: boolean; mouseDown: boolean; }
+class Farm extends React.Component<FarmProps, FarmState> {
   constructor(props: FarmProps){
     super(props)
     this.state = {
       mouseHover: false,
       mouseDown: false
     }
+
+    // this.handleMouseDown = this.handleMouseDown.bind(this);
+    // this.handleMouseEnter = this.handleMouseEnter.bind(this);
+    // this.handleMouseLeave = this.handleMouseLeave.bind(this);
+    // this.handleMouseUp = this.handleMouseUp.bind(this);
   }
 
-  createFarmGrid = ():JSX.Element[] => {
+  createFarmGrid = (columns: number, rows: number ):JSX.Element[] => {
     let row = [];
     let farmGrid = [];
 
-    for(let x = 0; x < this.props.farmColumns; x++) {
-      for(let y = 0; y < this.props.farmRows; y++) {
+    for(let x = 0; x < columns; x++) {
+      for(let y = 0; y < rows; y++) {
         row.push(
           <li key={[x, y].toString()}><Tile
             onMouseDown={this.handleMouseDown}
-            onMouseOver={this.handleMouseOver}
+            onMouseEnter={this.handleMouseEnter}
+            onMouseLeave={this.handleMouseLeave}
             onMouseUp={this.handleMouseUp}/>
           </li>
         )
@@ -75,50 +82,55 @@ class Farm extends React.Component<FarmProps, any> {
     return farmGrid;
   }
 
-  handleMouseOver = (e: React.MouseEvent<HTMLDivElement>):void => {
-    e.preventDefault();
-    console.log(e.target)
+  handleMouseEnter = ():void => {
     this.setState({
       mouseHover: true
     })
   }
 
-  handleMouseDown = (e: React.MouseEvent<HTMLDivElement>):void => {
-    e.preventDefault();
-    console.log(e.target);
+  handleMouseLeave = ():void => {
     this.setState({
-      mouseDown: true
+      mouseHover: false
     })
   }
 
-  handleMouseUp = (e: React.MouseEvent<HTMLDivElement>):void => {
-    e.preventDefault();
+  handleMouseDown = ():void => {
+    this.setState({
+      mouseDown: true
+    })
+    console.log(this.state.mouseDown);
+  }
+
+  // e: React.MouseEvent<HTMLDivElement>
+  handleMouseUp = ():void => {
     this.setState({
       mouseDown: false
     })
   }
 
-  farmGrid = this.createFarmGrid();
+  farmGrid = this.createFarmGrid(this.props.farmColumns, this.props.farmRows);
 
   render() {
     return (
-      <div className="tile-container" onMouseDown={this.handleMouseDown}>
+      <div 
+        className="tile-container" 
+        onMouseDown={this.handleMouseDown}
+        onMouseEnter={this.handleMouseEnter}
+        onMouseLeave={this.handleMouseLeave}
+        onMouseUp={this.handleMouseUp}>
         {this.farmGrid}
       </div>
     )
   }
 }
 
-
-// interface TileState { mouseHover: boolean; mouseDown:boolean }
-class Tile extends React.Component<any, undefined> {
-  constructor(props: any){
-    super(props)
-  }
-
-  render() {
-    return(
-      <div className="tile"></div>
-    )
-  }
+const Tile = (props: any) => {
+  return (
+    <div className="tile"
+      onMouseLeave={props.handleMouseLeave}
+      onMouseEnter={props.handleMouseEnter} 
+      onMouseDown={props.handleMouseDown}
+      onMouseUp={props.handleMouseUp}>
+    </div>
+  )
 }
