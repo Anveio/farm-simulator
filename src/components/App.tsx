@@ -12,7 +12,7 @@ export default class App extends React.Component<any, any> {
 
 const Game = () => {
   return(
-    <div className="container">
+    <div className="game-container">
       <div className="farm">
         <Farm farmRows={5} farmColumns={5} />
       </div>
@@ -29,7 +29,20 @@ class MoneyCounter extends React.Component<any, MoneyCounterState> {
     this.state = {
       currentMoneyCount: 0
     };
-  }  
+  }
+
+  componentDidMount() {
+    setInterval(
+      () => this.tick(),
+      1000
+    )
+  }
+
+  tick() {
+    this.setState(prevState => {
+      return { currentMoneyCount: prevState.currentMoneyCount + 1 }
+    })
+  }
 
   render() {
     return(
@@ -49,11 +62,6 @@ class Farm extends React.Component<FarmProps, FarmState> {
       mouseHover: false,
       mouseDown: false
     }
-
-    // this.handleMouseDown = this.handleMouseDown.bind(this);
-    // this.handleMouseEnter = this.handleMouseEnter.bind(this);
-    // this.handleMouseLeave = this.handleMouseLeave.bind(this);
-    // this.handleMouseUp = this.handleMouseUp.bind(this);
   }
 
   createFarmGrid = (columns: number, rows: number ):JSX.Element[] => {
@@ -63,11 +71,7 @@ class Farm extends React.Component<FarmProps, FarmState> {
     for(let x = 0; x < columns; x++) {
       for(let y = 0; y < rows; y++) {
         row.push(
-          <li key={[x, y].toString()}><Tile
-            onMouseDown={this.handleMouseDown}
-            onMouseEnter={this.handleMouseEnter}
-            onMouseLeave={this.handleMouseLeave}
-            onMouseUp={this.handleMouseUp}/>
+          <li key={[x, y].toString()}><Tile/>
           </li>
         )
       }
@@ -98,7 +102,6 @@ class Farm extends React.Component<FarmProps, FarmState> {
     this.setState({
       mouseDown: true
     })
-    console.log(this.state.mouseDown);
   }
 
   // e: React.MouseEvent<HTMLDivElement>
@@ -124,13 +127,8 @@ class Farm extends React.Component<FarmProps, FarmState> {
   }
 }
 
-const Tile = (props: any) => {
+const Tile = () => {
   return (
-    <div className="tile"
-      onMouseLeave={props.handleMouseLeave}
-      onMouseEnter={props.handleMouseEnter} 
-      onMouseDown={props.handleMouseDown}
-      onMouseUp={props.handleMouseUp}>
-    </div>
+    <div className="tile"></div>
   )
 }
