@@ -16,7 +16,7 @@ const Game = () => {
       <div className="farm">
         <Farm farmRows={5} farmColumns={5} />
       </div>
-      <MoneyCounter />
+      <MoneyCounter revenueRate={2}/>
     </div>
   )
 }
@@ -34,7 +34,7 @@ class MoneyCounter extends React.Component<any, MoneyCounterState> {
   componentDidMount() {
     setInterval(
       () => this.tick(),
-      1000
+      1000 * (1/this.props.revenueRate) 
     )
   }
 
@@ -54,12 +54,12 @@ class MoneyCounter extends React.Component<any, MoneyCounterState> {
 }
 
 interface FarmProps { farmColumns: number; farmRows: number; }
-interface FarmState { mouseHover: boolean; mouseDown: boolean; }
+interface FarmState { hovering: boolean; mouseDown: boolean; }
 class Farm extends React.Component<FarmProps, FarmState> {
   constructor(props: FarmProps){
     super(props)
     this.state = {
-      mouseHover: false,
+      hovering: false,
       mouseDown: false
     }
   }
@@ -86,29 +86,32 @@ class Farm extends React.Component<FarmProps, FarmState> {
     return farmGrid;
   }
 
-  handleMouseEnter = ():void => {
+  handleMouseEnter = (e: React.MouseEvent<HTMLDivElement>):void => {
     this.setState({
-      mouseHover: true
+      hovering: true
     })
+    console.log(e.target)
   }
 
-  handleMouseLeave = ():void => {
+  handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>):void => {
     this.setState({
-      mouseHover: false
+      hovering: false
     })
+    console.log(e.target)
   }
 
-  handleMouseDown = ():void => {
+  handleMouseDown = (e: React.MouseEvent<HTMLDivElement>):void => {
     this.setState({
       mouseDown: true
     })
+    console.log(e.target)
   }
 
-  // e: React.MouseEvent<HTMLDivElement>
-  handleMouseUp = ():void => {
+  handleMouseUp = (e: React.MouseEvent<HTMLDivElement>):void => {
     this.setState({
       mouseDown: false
     })
+    console.log(e.target)
   }
 
   farmGrid = this.createFarmGrid(this.props.farmColumns, this.props.farmRows);
