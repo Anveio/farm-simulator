@@ -15,39 +15,13 @@ class MouseData {
   constructor(readonly hovering: boolean, readonly  mouseDown: boolean) {} 
 }
 
-class Game extends React.Component<never, { revenueRate: number }> {
-  state = {
-    revenueRate: 1
-  }
-
-  // handleMouseActions = (mouseData: MouseData):void => {    
-  //   const newGrowthRate: number = this.calculateRevenueRate(mouseData)
-
-  //   this.setState(() => {
-  //     return { revenueRate: newGrowthRate }
-  //   })
-  // }
-
-  // calculateRevenueRate(mouseData: MouseData) {
-  //   let newGrowthRate: number = 1;
-
-  //   if (!mouseData.hovering){
-  //     newGrowthRate = 1;
-  //   } else if (mouseData.mouseDown){
-  //     newGrowthRate = 4;
-  //   } else if (mouseData.hovering) {
-  //     newGrowthRate = 2;
-  //   }
-  //   return newGrowthRate;
-  // }
-
+class Game extends React.Component<never, never> {
   render() {
     return(
       <div className="game-container">
         <div className="farm">
           <Farm farmRows={5} farmColumns={5}/>
         </div>
-        {/*<MoneyCounter revenueRateUpdate={this.state.revenueRate}/>*/}
       </div>
     )
   }
@@ -56,14 +30,9 @@ class Game extends React.Component<never, { revenueRate: number }> {
 
 
 interface FarmProps { farmColumns: number; farmRows: number; }
-interface FarmState { hovering: boolean; mouseDown: boolean;}
-class Farm extends React.Component<FarmProps, FarmState> {
+class Farm extends React.Component<FarmProps, never> {
   constructor(props: FarmProps){
     super(props)
-    this.state = {
-      hovering: false,
-      mouseDown: false
-    }
   }
 
   createFarmGrid = (columns: number, rows: number ):JSX.Element[] => {
@@ -92,20 +61,34 @@ class Farm extends React.Component<FarmProps, FarmState> {
 
   render() {
     return (
-      <EventLayer tileGrid={this.farmGrid}>
-      </EventLayer>
+      <div className="tile-container">
+        {this.farmGrid}
+      </div>
     )
   }
 }
 
-interface EventLayerProps { tileGrid: JSX.Element[]}
-class EventLayer extends React.Component<EventLayerProps, MouseData> {
+interface TileProps { tileID: string}
+class Tile extends React.Component<TileProps, MouseData> {
   constructor(props: any){
     super(props)
     this.state = {
       hovering: false,
       mouseDown: false
     }
+  }
+
+  calculateTileGrowthRate = (mouseData: MouseData):number => {
+    let newTileGrowthRate: number = 1;
+
+    if (!mouseData.hovering){
+      newTileGrowthRate = 1;
+    } else if (mouseData.mouseDown){
+      newTileGrowthRate = 4;
+    } else if (mouseData.hovering) {
+      newTileGrowthRate = 2;
+    }
+    return newTileGrowthRate;
   }
 
   handleMouseEnter = ():void => {
@@ -120,11 +103,10 @@ class EventLayer extends React.Component<EventLayerProps, MouseData> {
     })
   }
 
-  handleMouseDown = (e: React.MouseEvent<HTMLDivElement>):void => {
+  handleMouseDown = ():void => {
     this.setState({
       mouseDown: true
     })
-    console.log(e.target)
   }
 
   handleMouseUp = ():void => {
@@ -134,46 +116,26 @@ class EventLayer extends React.Component<EventLayerProps, MouseData> {
   }
 
   render() {
-    return(
+    return (
       <div 
-        className="tile-container" 
+        className="tile" 
+        id={"tile-" + this.props.tileID}
         onMouseDown={this.handleMouseDown}
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
         onMouseUp={this.handleMouseUp}>
-        {this.props.tileGrid}
+        <TileGrowth 
+          gpID={this.props.tileID}
+          growthRate={this.calculateTileGrowthRate(this.state)}
+        />
       </div>
     )
   }
 }
 
 
-interface TileProps { tileID: string}
-class Tile extends React.Component<TileProps, never> {
-
-  calculateGrowthRate = (mouseData: MouseData) => {
-    let newGrowthRate: number = 1;
-
-    if (!mouseData.hovering){
-      newGrowthRate = 1;
-    } else if (mouseData.mouseDown){
-      newGrowthRate = 4;
-    } else if (mouseData.hovering) {
-      newGrowthRate = 2;
-    }
-    return newGrowthRate;
-  }
-
-  render() {
-    return (
-      <div className="tile" id={"tile-" + this.props.tileID}>
-        <GrowthProgress gpID={this.props.tileID} />
-      </div>
-    )
-  }
-}
-
-class GrowthProgress extends React.Component<any, { progress: number }> {
+interface TileGrowthProps { gpID: string; growthRate: number; }
+class TileGrowth extends React.Component<TileGrowthProps, { progress: number }> {
   constructor(props: any){
     super(props)
     this.state = {
@@ -185,6 +147,14 @@ class GrowthProgress extends React.Component<any, { progress: number }> {
   componentDidMount():void {
     this.ticker = setInterval(() => { this.tick(); }
     , 400)
+  }
+
+  componentWillReceiveProps(nextProps: TileGrowthProps) {
+    clearInterval(this.ticker)
+    this.ticker = setInterval(() =>
+      this.tick(), 
+      400 / nextProps.growthRate
+    )
   }
 
   tick():void {
@@ -218,7 +188,7 @@ class GrowthProgress extends React.Component<any, { progress: number }> {
 
   render() {
     return (
-      <span id={'gp-' + this.props.gpID} className="growth-progress" style={this.calculateDimensions()}> </span>
+      <span id={'gp-' + this.props.gpID} className="tile-growth-progress" style={this.calculateDimensions()}> </span>
     )
   }
 }
