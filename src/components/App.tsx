@@ -198,16 +198,45 @@ const Tile = (props: { tileID: string }) => {
 class GrowthProgress extends React.Component<any, any> {
   constructor(props: any){
     super(props)
+    this.state = {
+      progress: 0,
+      height: 0,
+      width: 0,
+    }
   }
 
-  progressStyle = {
-    width: '100%',
-    height: '100%',
+  ticker: any;
+  componentDidMount():void {
+    this.ticker = setInterval(() => { this.tick(); }
+    , 100)
   }
+
+  tick():void {
+    if (this.state.progress === 100) {
+      this.setState({
+        progress: 0,
+        width: 0,
+        height: 0
+      })
+    }
+
+    this.setState(prevState => {
+      return { 
+        progress: prevState.progress + 1,
+        width: prevState.progress + 1,
+        height: prevState.progress + 1 
+      }
+    })
+  }
+
+  calculateDimensions = () => { return this.state.progress }
+
+
+
 
   render() {
     return (
-      <span className="growth-progress" style={this.progressStyle}>
+      <span className="growth-progress" style={{height: this.state.height, width: this.state.width}}>
         
       </span>
     )
