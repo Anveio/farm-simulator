@@ -1,5 +1,5 @@
 import * as React from "react";
-// import MoneyCounter from "./MoneyCounter";
+import MoneyCounter from "./MoneyCounter";
 
 export default class App extends React.Component<never, never> {
   render() {
@@ -17,16 +17,17 @@ class MouseData {
 
 class Game extends React.Component<never, never> {
 
-  handleIncomingRevenue = () => {
-    return "fill this in";
+  handleIncomingRevenue = ():number => {
+    return 1;
   }
 
   render() {
     return(
       <div className="game-container">
         <div className="farm">
-          <Farm farmRows={5} farmColumns={5}/>
+          <Farm farmRows={5} farmColumns={5} onTileReadyForHarvest={this.handleIncomingRevenue}/>
         </div>
+        <MoneyCounter incomingRevenue={this.handleIncomingRevenue()} />
       </div>
     )
   }
@@ -34,10 +35,14 @@ class Game extends React.Component<never, never> {
 
 
 
-interface FarmProps { farmColumns: number; farmRows: number; }
+interface FarmProps { farmColumns: number; farmRows: number; onTileReadyForHarvest: any; }
 class Farm extends React.Component<FarmProps, never> {
   constructor(props: FarmProps){
     super(props)
+  }
+
+  handleTileGrowthFinish = ():void => {
+    this.props.onTileReadyForHarvest();
   }
 
   createFarmGrid = (columns: number, rows: number ):JSX.Element[] => {
@@ -47,7 +52,10 @@ class Farm extends React.Component<FarmProps, never> {
     for(let x = 0; x < columns; x++) {
       for(let y = 0; y < rows; y++) {
         row.push(
-          <li key={[x, y].toString()}><Tile tileID={[x, y].toString()}/>
+          <li key={[x, y].toString()}>
+            <Tile 
+              tileID={[x, y].toString()}
+              onTileGrowthFinish={this.handleTileGrowthFinish}/>
           </li>
         )
       }
@@ -73,7 +81,7 @@ class Farm extends React.Component<FarmProps, never> {
   }
 }
 
-interface TileProps { tileID: string}
+interface TileProps { tileID: string; onTileGrowthFinish: any}
 class Tile extends React.Component<TileProps, MouseData> {
   constructor(props: any){
     super(props)
@@ -81,6 +89,10 @@ class Tile extends React.Component<TileProps, MouseData> {
       hovering: false,
       mouseDown: false
     }
+  }
+
+  sendGrowthFinishUpstream = ():void => {
+    this.props.onTileGrowthFinish();
   }
 
   calculateTileGrowthRate = (mouseData: MouseData):number => {
@@ -132,6 +144,7 @@ class Tile extends React.Component<TileProps, MouseData> {
         <TileGrowth 
           gpID={this.props.tileID}
           growthRate={this.calculateTileGrowthRate(this.state)}
+          onGrowthFinish={this.sendGrowthFinishUpstream}
         />
       </div>
     )
@@ -139,7 +152,7 @@ class Tile extends React.Component<TileProps, MouseData> {
 }
 
 
-interface TileGrowthProps { gpID: string; growthRate: number; }
+interface TileGrowthProps { gpID: string; growthRate: number; onGrowthFinish: any }
 class TileGrowth extends React.Component<TileGrowthProps, { progress: number }> {
   constructor(props: any){
     super(props)
@@ -168,6 +181,8 @@ class TileGrowth extends React.Component<TileGrowthProps, { progress: number }> 
 
   tick(growthMultiplier:number = 1):void {
     if (this.state.progress >= 100) {
+      this.props.onGrowthFinish();
+
       this.setState({
         progress: 0,
       })
