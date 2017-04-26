@@ -1,4 +1,5 @@
 import * as React from "react";
+import MoneyCounter from "./MoneyCounter";
 
 export default class App extends React.Component<never, never> {
   render() {
@@ -44,7 +45,7 @@ class Game extends React.Component<never, { revenueRate: number }> {
     return(
       <div className="game-container">
         <div className="farm">
-          <Farm farmRows={5} farmColumns={5} onMouseAction={this.handleMouseActions}/>
+          <Farm farmRows={5} farmColumns={5} onMouseAction={this.handleMouseActions} growthRate={10}/>
         </div>
         <MoneyCounter revenueRateUpdate={this.state.revenueRate}/>
       </div>
@@ -52,53 +53,9 @@ class Game extends React.Component<never, { revenueRate: number }> {
   }
 }
 
-interface MoneyCounterProps { revenueRateUpdate: number }
-interface MoneyCounterState { currentMoneyCount: number; }
-class MoneyCounter extends React.Component<MoneyCounterProps, MoneyCounterState> {
-  constructor(props:MoneyCounterProps){
-    super(props)
-    this.state = {
-      currentMoneyCount: 0,
-    };
-  }
 
-  ticker: any;
 
-  componentDidMount() {
-    this.ticker = setInterval(() => 
-      this.tick(), 
-      1000
-    )
-  }
-
-  componentWillReceiveProps(nextProps: MoneyCounterProps) {
-    clearInterval(this.ticker)
-    this.ticker = setInterval(() =>
-      this.tick(), 
-      this.calculateRevenueInterval(nextProps.revenueRateUpdate)
-    )
-  }
-
-  calculateRevenueInterval = (rate: number) => {
-    return (1000 * (1/rate));
-  }
-
-  tick() {
-    this.setState(prevState => {
-      return { currentMoneyCount: prevState.currentMoneyCount + 1 }
-    })
-  }
-
-  render() {
-    return(
-      <div className="money-display">
-        <h3>{this.state.currentMoneyCount}</h3>
-      </div>
-    )
-  }
-}
-
-interface FarmProps { farmColumns: number; farmRows: number; onMouseAction: any;}
+interface FarmProps { farmColumns: number; farmRows: number; onMouseAction: any; growthRate: number }
 interface FarmState { hovering: boolean; mouseDown: boolean;}
 class Farm extends React.Component<FarmProps, FarmState> {
   constructor(props: FarmProps){
@@ -116,7 +73,7 @@ class Farm extends React.Component<FarmProps, FarmState> {
     for(let x = 0; x < columns; x++) {
       for(let y = 0; y < rows; y++) {
         row.push(
-          <li key={[x, y].toString()}><Tile tileID={"tile-" + [x, y].toString()}/>
+          <li key={[x, y].toString()}><Tile growthRate={this.props.growthRate} tileID={[x, y].toString()}/>
           </li>
         )
       }
@@ -187,10 +144,11 @@ class Farm extends React.Component<FarmProps, FarmState> {
 }
 
 
-const Tile = (props: { tileID: string }) => {
+interface TileProps { growthRate: number; tileID: string}
+const Tile = (props: TileProps) => {
   return (
-    <div className="tile" id={props.tileID}>
-      <GrowthProgress />
+    <div className="tile" id={"tile-" + props.tileID}>
+      <GrowthProgress gpID={props.tileID} growthRate={props.growthRate} />
     </div>
   )
 }
@@ -206,7 +164,7 @@ class GrowthProgress extends React.Component<any, { progress: number }> {
   ticker: any;
   componentDidMount():void {
     this.ticker = setInterval(() => { this.tick(); }
-    , 100)
+    , 400 / this.props.growthRate)
   }
 
   tick():void {
@@ -219,8 +177,6 @@ class GrowthProgress extends React.Component<any, { progress: number }> {
     this.setState(prevState => {
       return { 
         progress: Math.min(Math.max(prevState.progress + 1, 1), 100),
-        width: prevState.progress + 1,
-        height: prevState.progress + 1 
       }
     })
   }
@@ -228,7 +184,7 @@ class GrowthProgress extends React.Component<any, { progress: number }> {
   calculateDimensions = () => {
     let width;
     
-    if(this.state.progress >= 100){
+    if(this.state.progress >= 100) {
       width = '100%';
     } else {
       width = `${this.state.progress}%`
@@ -242,7 +198,7 @@ class GrowthProgress extends React.Component<any, { progress: number }> {
 
   render() {
     return (
-      <span className="growth-progress" style={this.calculateDimensions()}> </span>
+      <span id={'gp-' + this.props.gpID} className="growth-progress" style={this.calculateDimensions()}> </span>
     )
   }
 }
