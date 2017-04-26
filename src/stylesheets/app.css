@@ -23,6 +23,7 @@ h1 {
 }
 
 .tile {
+  transition: all 1s;
   background-color: brown;
   border: 1px solid black;
   flex: 1;

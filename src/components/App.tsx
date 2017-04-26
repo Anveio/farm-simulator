@@ -16,6 +16,11 @@ class MouseData {
 }
 
 class Game extends React.Component<never, never> {
+
+  handleIncomingRevenue = () => {
+    return "fill this in";
+  }
+
   render() {
     return(
       <div className="game-container">
@@ -143,21 +148,25 @@ class TileGrowth extends React.Component<TileGrowthProps, { progress: number }> 
     }
   }
 
+  tickRate: number = 50;
+
   ticker: any;
   componentDidMount():void {
     this.ticker = setInterval(() => { this.tick(); }
-    , 400)
+    , this.tickRate)
   }
 
   componentWillReceiveProps(nextProps: TileGrowthProps) {
-    clearInterval(this.ticker)
-    this.ticker = setInterval(() =>
-      this.tick(), 
-      400 / nextProps.growthRate
-    )
+    process.nextTick(() => {
+      clearInterval(this.ticker)
+      this.ticker = setInterval(() =>
+        this.tick(nextProps.growthRate), 
+        this.tickRate
+      )
+    })
   }
 
-  tick():void {
+  tick(growthMultiplier:number = 1):void {
     if (this.state.progress >= 100) {
       this.setState({
         progress: 0,
@@ -166,7 +175,7 @@ class TileGrowth extends React.Component<TileGrowthProps, { progress: number }> 
 
     this.setState(prevState => {
       return { 
-        progress: Math.min(Math.max(prevState.progress + 1, 1), 100),
+        progress: Math.min(Math.max(prevState.progress + (1 * growthMultiplier), 1), 100),
       }
     })
   }
