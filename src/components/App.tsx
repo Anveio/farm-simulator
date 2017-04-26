@@ -1,5 +1,5 @@
 import * as React from "react";
-import MoneyCounter from "./MoneyCounter";
+// import MoneyCounter from "./MoneyCounter";
 
 export default class App extends React.Component<never, never> {
   render() {
@@ -20,34 +20,34 @@ class Game extends React.Component<never, { revenueRate: number }> {
     revenueRate: 1
   }
 
-  handleMouseActions = (mouseUpdate: MouseData):void => {    
-    const newRevenueRate: number = this.calculateRevenueRate(mouseUpdate)
+  // handleMouseActions = (mouseData: MouseData):void => {    
+  //   const newGrowthRate: number = this.calculateRevenueRate(mouseData)
 
-    this.setState(() => {
-      return { revenueRate: newRevenueRate }
-    })
-  }
+  //   this.setState(() => {
+  //     return { revenueRate: newGrowthRate }
+  //   })
+  // }
 
-  calculateRevenueRate(mouseUpdate: MouseData) {
-    let newRevenueRate: number = 1;
+  // calculateRevenueRate(mouseData: MouseData) {
+  //   let newGrowthRate: number = 1;
 
-    if (!mouseUpdate.hovering){
-      newRevenueRate = 1;
-    } else if (mouseUpdate.mouseDown){
-      newRevenueRate = 4;
-    } else if (mouseUpdate.hovering) {
-      newRevenueRate = 2;
-    }
-    return newRevenueRate;
-  }
+  //   if (!mouseData.hovering){
+  //     newGrowthRate = 1;
+  //   } else if (mouseData.mouseDown){
+  //     newGrowthRate = 4;
+  //   } else if (mouseData.hovering) {
+  //     newGrowthRate = 2;
+  //   }
+  //   return newGrowthRate;
+  // }
 
   render() {
     return(
       <div className="game-container">
         <div className="farm">
-          <Farm farmRows={5} farmColumns={5} onMouseAction={this.handleMouseActions} growthRate={10}/>
+          <Farm farmRows={5} farmColumns={5}/>
         </div>
-        <MoneyCounter revenueRateUpdate={this.state.revenueRate}/>
+        {/*<MoneyCounter revenueRateUpdate={this.state.revenueRate}/>*/}
       </div>
     )
   }
@@ -55,7 +55,7 @@ class Game extends React.Component<never, { revenueRate: number }> {
 
 
 
-interface FarmProps { farmColumns: number; farmRows: number; onMouseAction: any; growthRate: number }
+interface FarmProps { farmColumns: number; farmRows: number; }
 interface FarmState { hovering: boolean; mouseDown: boolean;}
 class Farm extends React.Component<FarmProps, FarmState> {
   constructor(props: FarmProps){
@@ -73,7 +73,7 @@ class Farm extends React.Component<FarmProps, FarmState> {
     for(let x = 0; x < columns; x++) {
       for(let y = 0; y < rows; y++) {
         row.push(
-          <li key={[x, y].toString()}><Tile growthRate={this.props.growthRate} tileID={[x, y].toString()}/>
+          <li key={[x, y].toString()}><Tile tileID={[x, y].toString()}/>
           </li>
         )
       }
@@ -87,20 +87,41 @@ class Farm extends React.Component<FarmProps, FarmState> {
     return farmGrid;
   }
 
-  sendUpdatedMouseInfo = ():void => {
-    const currentMouseStatus = ():MouseData => { 
-      return { hovering: this.state.hovering, mouseDown: this.state.mouseDown }
-    }
 
-    this.props.onMouseAction(currentMouseStatus());
+  farmGrid = this.createFarmGrid(this.props.farmColumns, this.props.farmRows);
+
+  render() {
+    return (
+      <EventLayer tileGrid={this.farmGrid}>
+      </EventLayer>
+    )
   }
+}
+
+interface EventLayerProps { tileGrid: JSX.Element[]}
+class EventLayer extends React.Component<EventLayerProps, MouseData> {
+  constructor(props: any){
+    super(props)
+    this.state = {
+      hovering: false,
+      mouseDown: false
+    }
+  }
+
+  // sendUpdatedMouseInfo = ():void => {
+  //   const currentMouseStatus = ():MouseData => { 
+  //     return { hovering: this.state.hovering, mouseDown: this.state.mouseDown }
+  //   }
+
+  //   this.props.onMouseAction(currentMouseStatus());
+  // }
 
   handleMouseEnter = ():void => {
     this.setState({
       hovering: true
     })
     
-    process.nextTick(this.sendUpdatedMouseInfo);
+    // process.nextTick(this.sendUpdatedMouseInfo);
   }
 
   handleMouseLeave = ():void => {
@@ -108,7 +129,7 @@ class Farm extends React.Component<FarmProps, FarmState> {
       hovering: false
     })
     
-    process.nextTick(this.sendUpdatedMouseInfo);
+    // process.nextTick(this.sendUpdatedMouseInfo);
   }
 
   handleMouseDown = (e: React.MouseEvent<HTMLDivElement>):void => {
@@ -116,7 +137,7 @@ class Farm extends React.Component<FarmProps, FarmState> {
       mouseDown: true
     })
     console.log(e.target)
-    process.nextTick(this.sendUpdatedMouseInfo);
+    // process.nextTick(this.sendUpdatedMouseInfo);
   }
 
   handleMouseUp = ():void => {
@@ -124,31 +145,24 @@ class Farm extends React.Component<FarmProps, FarmState> {
       mouseDown: false
     })
 
-    process.nextTick(this.sendUpdatedMouseInfo);
+    // process.nextTick(this.sendUpdatedMouseInfo);
   }
 
-  farmGrid = this.createFarmGrid(this.props.farmColumns, this.props.farmRows);
-
   render() {
-    return (
-      <div 
-        className="tile-container" 
-        onMouseDown={this.handleMouseDown}
-        onMouseEnter={this.handleMouseEnter}
-        onMouseLeave={this.handleMouseLeave}
-        onMouseUp={this.handleMouseUp}>
-        {this.farmGrid}
+    return(
+      <div className="tile-container">
+        {this.props.tileGrid}
       </div>
     )
   }
 }
 
 
-interface TileProps { growthRate: number; tileID: string}
+interface TileProps { tileID: string}
 const Tile = (props: TileProps) => {
   return (
     <div className="tile" id={"tile-" + props.tileID}>
-      <GrowthProgress gpID={props.tileID} growthRate={props.growthRate} />
+      <GrowthProgress gpID={props.tileID} />
     </div>
   )
 }
@@ -161,10 +175,23 @@ class GrowthProgress extends React.Component<any, { progress: number }> {
     }
   }
 
+  calculateGrowthRate(mouseData: MouseData) {
+    let newGrowthRate: number = 1;
+
+    if (!mouseData.hovering){
+      newGrowthRate = 1;
+    } else if (mouseData.mouseDown){
+      newGrowthRate = 4;
+    } else if (mouseData.hovering) {
+      newGrowthRate = 2;
+    }
+    return newGrowthRate;
+  }
+
   ticker: any;
   componentDidMount():void {
     this.ticker = setInterval(() => { this.tick(); }
-    , 400 / this.props.growthRate)
+    , 400)
   }
 
   tick():void {
