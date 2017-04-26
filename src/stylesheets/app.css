@@ -23,12 +23,16 @@ h1 {
 }
 
 .tile {
-  background-color: brown;
+  /*background-color: brown;*/
   border: 1px solid black;
   flex: 1;
   font-size: 25px;
   height: 3em;
   width: 3em;
+}
+
+.growth-progress {
+  display: block;
 }
 
 ul {

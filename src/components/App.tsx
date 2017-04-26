@@ -189,6 +189,27 @@ class Farm extends React.Component<FarmProps, FarmState> {
 
 const Tile = (props: { tileID: string }) => {
   return (
-    <div className="tile" id={props.tileID}></div>
+    <div className="tile" id={props.tileID}>
+      <GrowthProgress />
+    </div>
   )
+}
+
+class GrowthProgress extends React.Component<any, any> {
+  constructor(props: any){
+    super(props)
+  }
+
+  progressStyle = {
+    width: '100%',
+    height: '100%',
+  }
+
+  render() {
+    return (
+      <span className="growth-progress" style={this.progressStyle}>
+        
+      </span>
+    )
+  }
 }
