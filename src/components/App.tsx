@@ -30,7 +30,7 @@ class Game extends React.Component<never, { revenueRate: number }> {
   calculateRevenueRate(mouseUpdate: MouseData) {
     let newRevenueRate: number = 1;
 
-    if (!mouseUpdate.mouseDown && !mouseUpdate.hovering){
+    if (!mouseUpdate.hovering){
       newRevenueRate = 1;
     } else if (mouseUpdate.mouseDown){
       newRevenueRate = 4;
@@ -62,19 +62,19 @@ class MoneyCounter extends React.Component<MoneyCounterProps, MoneyCounterState>
     };
   }
 
-  ticker:any;
+  ticker: any;
 
   componentDidMount() {
-    this.ticker = setInterval(
-      () => this.tick(), 
+    this.ticker = setInterval(() => 
+      this.tick(), 
       1000
     )
   }
 
   componentWillReceiveProps(nextProps: MoneyCounterProps) {
     clearInterval(this.ticker)
-    this.ticker = setInterval(
-      () => this.tick(),
+    this.ticker = setInterval(() =>
+      this.tick(), 
       this.calculateRevenueInterval(nextProps.revenueRateUpdate)
     )
   }
@@ -93,7 +93,6 @@ class MoneyCounter extends React.Component<MoneyCounterProps, MoneyCounterState>
     return(
       <div className="money-display">
         <h3>{this.state.currentMoneyCount}</h3>
-        <h3>Incoming Rate:{this.props.revenueRateUpdate}</h3>
       </div>
     )
   }
@@ -117,13 +116,13 @@ class Farm extends React.Component<FarmProps, FarmState> {
     for(let x = 0; x < columns; x++) {
       for(let y = 0; y < rows; y++) {
         row.push(
-          <li key={[x, y].toString()}><Tile/>
+          <li key={[x, y].toString()}><Tile tileID={"tile-" + [x, y].toString()}/>
           </li>
         )
       }
 
       farmGrid.push(
-        <ul key={x} className="farm-column">{row}</ul>
+        <ul key={x} className="farm-column" id={"row-" + x}>{row}</ul>
       )
       row = [];
     }
@@ -155,11 +154,11 @@ class Farm extends React.Component<FarmProps, FarmState> {
     process.nextTick(this.sendUpdatedMouseInfo);
   }
 
-  handleMouseDown = ():void => {
+  handleMouseDown = (e: React.MouseEvent<HTMLDivElement>):void => {
     this.setState({
       mouseDown: true
     })
-    
+    console.log(e.target)
     process.nextTick(this.sendUpdatedMouseInfo);
   }
 
@@ -187,8 +186,9 @@ class Farm extends React.Component<FarmProps, FarmState> {
   }
 }
 
-const Tile = () => {
+
+const Tile = (props: { tileID: string }) => {
   return (
-    <div className="tile"></div>
+    <div className="tile" id={props.tileID}></div>
   )
 }
