@@ -1,6 +1,6 @@
 import * as React from "react";
 
-export default class App extends React.Component<any, any> {
+export default class App extends React.Component<never, never> {
   render() {
     return(
       <div>
@@ -10,36 +10,75 @@ export default class App extends React.Component<any, any> {
   }
 }
 
-const Game = () => {
-  return(
-    <div className="game-container">
-      <div className="farm">
-        <Farm farmRows={5} farmColumns={5} />
-      </div>
-      <MoneyCounter revenueRate={2}/>
-    </div>
-  )
+class MouseData { 
+  constructor(readonly hovering: boolean, readonly  mouseDown: boolean) {} 
 }
 
-// interface MoneyCounterProps { updatedMoneyCount: number }
-interface MoneyCounterState { currentMoneyCount: number }
-class MoneyCounter extends React.Component<any, MoneyCounterState> {
-  constructor(props:number){
+class Game extends React.Component<never, { revenueRate: number }> {
+  state = {
+    revenueRate: 1
+  }
+
+  handleMouseActions = (mouseUpdate: MouseData):void => {    
+    const newRevenueRate: number = this.calculateRevenueRate(mouseUpdate)
+
+    this.setState(() => {
+      return { revenueRate: newRevenueRate }
+    })
+    
+    console.log(mouseUpdate);
+  }
+
+  calculateRevenueRate(mouseUpdate: MouseData) {
+    let newRevenueRate: number = 1;
+
+    if (!mouseUpdate.mouseDown && !mouseUpdate.hovering){
+      newRevenueRate = 1;
+    } else if (mouseUpdate.mouseDown){
+      newRevenueRate = 4;
+    } else if (mouseUpdate.hovering) {
+      newRevenueRate = 2;
+    }
+    return newRevenueRate;
+  }
+
+  render() {
+    return(
+      <div className="game-container">
+        <div className="farm">
+          <Farm farmRows={5} farmColumns={5} onMouseAction={this.handleMouseActions}/>
+        </div>
+        <MoneyCounter revenueRateUpdate={this.state.revenueRate}/>
+      </div>
+    )
+  }
+}
+
+interface MoneyCounterProps { revenueRateUpdate: number }
+interface MoneyCounterState { currentMoneyCount: number; revenueRate: number }
+class MoneyCounter extends React.Component<MoneyCounterProps, MoneyCounterState> {
+  constructor(props:MoneyCounterProps){
     super(props)
     this.state = {
-      currentMoneyCount: 0
+      currentMoneyCount: 0,
+      revenueRate: 1
     };
   }
 
   componentDidMount() {
     setInterval(
       () => this.tick(),
-      1000 * (1/this.props.revenueRate) 
+      this.calculateRevenueInterval(this.props.revenueRateUpdate)
     )
+  }
+
+  calculateRevenueInterval = (rate: number) => {
+    return (1000 * (1/rate));
   }
 
   tick() {
     this.setState(prevState => {
+      console.log(this.props.revenueRateUpdate);
       return { currentMoneyCount: prevState.currentMoneyCount + 1 }
     })
   }
@@ -48,13 +87,14 @@ class MoneyCounter extends React.Component<any, MoneyCounterState> {
     return(
       <div className="money-display">
         <h3>{this.state.currentMoneyCount}</h3>
+        <h3>{this.props.revenueRateUpdate}</h3>
       </div>
     )
   }
 }
 
-interface FarmProps { farmColumns: number; farmRows: number; }
-interface FarmState { hovering: boolean; mouseDown: boolean; }
+interface FarmProps { farmColumns: number; farmRows: number; onMouseAction: any;}
+interface FarmState { hovering: boolean; mouseDown: boolean;}
 class Farm extends React.Component<FarmProps, FarmState> {
   constructor(props: FarmProps){
     super(props)
@@ -79,39 +119,50 @@ class Farm extends React.Component<FarmProps, FarmState> {
       farmGrid.push(
         <ul key={x} className="farm-column">{row}</ul>
       )
-
       row = [];
     }
 
     return farmGrid;
   }
 
-  handleMouseEnter = (e: React.MouseEvent<HTMLDivElement>):void => {
+  sendUpdatedMouseInfo = ():void => {
+    const currentMouseStatus = ():MouseData => { 
+      return { hovering: this.state.hovering, mouseDown: this.state.mouseDown }
+    }
+
+    this.props.onMouseAction(currentMouseStatus());
+  }
+
+  handleMouseEnter = ():void => {
     this.setState({
       hovering: true
     })
-    console.log(e.target)
+    
+    process.nextTick(this.sendUpdatedMouseInfo);
   }
 
-  handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>):void => {
+  handleMouseLeave = ():void => {
     this.setState({
       hovering: false
     })
-    console.log(e.target)
+    
+    process.nextTick(this.sendUpdatedMouseInfo);
   }
 
-  handleMouseDown = (e: React.MouseEvent<HTMLDivElement>):void => {
+  handleMouseDown = ():void => {
     this.setState({
       mouseDown: true
     })
-    console.log(e.target)
+    
+    process.nextTick(this.sendUpdatedMouseInfo);
   }
 
-  handleMouseUp = (e: React.MouseEvent<HTMLDivElement>):void => {
+  handleMouseUp = ():void => {
     this.setState({
       mouseDown: false
     })
-    console.log(e.target)
+
+    process.nextTick(this.sendUpdatedMouseInfo);
   }
 
   farmGrid = this.createFarmGrid(this.props.farmColumns, this.props.farmRows);
