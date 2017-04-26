@@ -25,8 +25,6 @@ class Game extends React.Component<never, { revenueRate: number }> {
     this.setState(() => {
       return { revenueRate: newRevenueRate }
     })
-    
-    console.log(mouseUpdate);
   }
 
   calculateRevenueRate(mouseUpdate: MouseData) {
@@ -55,20 +53,29 @@ class Game extends React.Component<never, { revenueRate: number }> {
 }
 
 interface MoneyCounterProps { revenueRateUpdate: number }
-interface MoneyCounterState { currentMoneyCount: number; revenueRate: number }
+interface MoneyCounterState { currentMoneyCount: number; }
 class MoneyCounter extends React.Component<MoneyCounterProps, MoneyCounterState> {
   constructor(props:MoneyCounterProps){
     super(props)
     this.state = {
       currentMoneyCount: 0,
-      revenueRate: 1
     };
   }
 
+  ticker:any;
+
   componentDidMount() {
-    setInterval(
+    this.ticker = setInterval(
+      () => this.tick(), 
+      1000
+    )
+  }
+
+  componentWillReceiveProps(nextProps: MoneyCounterProps) {
+    clearInterval(this.ticker)
+    this.ticker = setInterval(
       () => this.tick(),
-      this.calculateRevenueInterval(this.props.revenueRateUpdate)
+      this.calculateRevenueInterval(nextProps.revenueRateUpdate)
     )
   }
 
@@ -78,7 +85,6 @@ class MoneyCounter extends React.Component<MoneyCounterProps, MoneyCounterState>
 
   tick() {
     this.setState(prevState => {
-      console.log(this.props.revenueRateUpdate);
       return { currentMoneyCount: prevState.currentMoneyCount + 1 }
     })
   }
@@ -87,7 +93,7 @@ class MoneyCounter extends React.Component<MoneyCounterProps, MoneyCounterState>
     return(
       <div className="money-display">
         <h3>{this.state.currentMoneyCount}</h3>
-        <h3>{this.props.revenueRateUpdate}</h3>
+        <h3>Incoming Rate:{this.props.revenueRateUpdate}</h3>
       </div>
     )
   }
