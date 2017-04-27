@@ -6,9 +6,25 @@ h1 {
   text-align: center;
 }
 
+.app-container {
+  display: flex;
+  width: 100%;
+}
+
+.game-column {
+  display: flex;
+  max-width: 80%;
+  flex: 4
+}
+
+.menu-column {
+  flex: 1;
+  order: 1
+}
+
 .game-container {
-  text-align: center;
-  justify-content: center;
+  flex: 1;
+  order: 2;
   margin: auto;
   width: 100%;
   height: 100%;
@@ -23,37 +39,67 @@ h1 {
 }
 
 .tile-ul {
-  /* Each tile is 3em (base 25px) large */
+  /* Each tile is 3em (base 25px) + 3px border */
   font-size: 25px;
   max-height: 16em;
   max-width: 16em;
   position: relative;
-  justify-content: center;
+  justify-content: flex-start;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  align-content: space-between;
 }
 
 .tile {
-  transition: all 1s;
   background-color: brown;
-  border: 1px solid black;
+  border: 2px solid black;
   flex: 1;
   font-size: 25px;
   height: 3em;
   width: 3em;
 }
 
+.tile:hover {
+  border: 2px solid yellow;
+}
+
 .tile-growth-progress {
   display: block;
-  background-color: green;
+  background-color: #00a500
 }
 
 .money-display {
+  text-align: center;
+  justify-content: center;
   position: relative;
 }
 
+.add-tile-li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  display: flex;
+  margin: 3px;
+}
+
+.add-tile-btn {
+  font-size: 25px;
+  height: 3em;
+  width: 3em;
+
+  background-color: white;
+  border: 4px dashed #BBDEFB;
+}
+
 ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+li {
   list-style: none;
   margin: 0;
   padding: 0;

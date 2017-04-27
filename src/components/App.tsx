@@ -32,24 +32,29 @@ class Game extends React.Component<never, { money: number }> {
 
   render() {
     return (
-      <div className="game-container">
-        <MoneyCounter money={this.state.money} />
-        <div className="farm">
-          <Farm onTileReadyForHarvest={this.handleIncomingHarvest} />
+      <div className="app-container">
+        <div className="game-column">
+          <div className="game-container">
+            <MoneyCounter money={this.state.money} />
+            <div className="farm">
+              <Farm onTileReadyForHarvest={this.handleIncomingHarvest} />
+            </div>
+          </div>
+        </div>
+        <div className="menu-column">
+          <h3> Game Menu </h3>
         </div>
       </div>
     )
   }
 }
 
-
-
 interface FarmProps { onTileReadyForHarvest: any; }
 class Farm extends React.Component<FarmProps, { tiles: number } > {
   constructor(props: FarmProps){
     super(props)
     this.state = {
-      tiles: 25
+      tiles: 24
     }
   }
 
@@ -64,6 +69,7 @@ class Farm extends React.Component<FarmProps, { tiles: number } > {
       createdTiles.push(
         <li key={i.toString()}>
           <Tile 
+            key={i.toString()}
             tileID={i.toString()}
             onTileGrowthFinish={this.handleTileGrowthFinish} />
         </li>
@@ -73,48 +79,12 @@ class Farm extends React.Component<FarmProps, { tiles: number } > {
     return createdTiles
   }
 
-  
-
-  /*createFarmGrid = (columns: number, rows: number ):JSX.Element[] => {
-    let row = [];
-    let farmGrid = [];
-
-    for(let x = 0; x < columns; x++) {
-      for(let y = 0; y < rows; y++) {
-        row.push(
-          <li key={[x, y].toString()}>
-            <Tile 
-              tileID={[x, y].toString()}
-              onTileGrowthFinish={this.handleTileGrowthFinish} />
-          </li>
-        )
-      }
-
-      farmGrid.push(
-        <ul key={x} className="farm-column" id={"row-" + x}>{row}</ul>
-      )
-      row = [];
-    }
-
-    return farmGrid;
-  }*/
-
-  // farmGrid = this.createFarmGrid(this.props.farmColumns, this.props.farmRows);
-
-  /*addTileToFarm = () => {
-    this.state.tiles.push(<li>
-      <Tile
-        key={this.state.tiles.length}
-        tileID={this.state.tiles.length.toString()}
-        onTileGrowthFinish={this.handleTileGrowthFinish} />
-      </li>
-    )
-  }*/
-
   render() {
-    // this.addTileToFarm();
     return (
-      <ul className="tile-ul">{this.createFarmGrid(this.state.tiles)}</ul>
+      <ul className="tile-ul">
+        {this.createFarmGrid(this.state.tiles)}
+        <li className="add-tile-li"> <button className="add-tile-btn">+</button> </li>
+      </ul>
     )
   }
 }
@@ -158,7 +128,8 @@ class Tile extends React.Component<TileProps, MouseData> {
     })
   }
 
-  handleMouseDown = ():void => {
+  handleMouseDown = (e: React.MouseEvent<HTMLDivElement>):void => {
+    e.preventDefault
     this.setState({
       mouseDown: true
     })
@@ -188,7 +159,6 @@ class Tile extends React.Component<TileProps, MouseData> {
     )
   }
 }
-
 
 interface TileGrowthProps { gpID: string; growthRate: number; onGrowthFinish: any }
 class TileGrowth extends React.Component<TileGrowthProps, { progress: number }> {
@@ -234,7 +204,7 @@ class TileGrowth extends React.Component<TileGrowthProps, { progress: number }> 
   }
 
   calculateDimensions = () => {
-    let width;
+    let width
     
     if(this.state.progress >= 100) {
       width = '100%';
@@ -243,14 +213,18 @@ class TileGrowth extends React.Component<TileGrowthProps, { progress: number }> 
     }
 
     return {
-      height: '100%',
-      width: width 
+      width: width,
+      height: '100%' 
     } 
   }
 
   render() {
     return (
-      <span id={'gp-' + this.props.gpID} className="tile-growth-progress" style={this.calculateDimensions()}> </span>
+      <span 
+        id={'gp-' + this.props.gpID} 
+        className="tile-growth-progress" 
+        style={this.calculateDimensions()} > 
+      </span>
     )
   }
 }
