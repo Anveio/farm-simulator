@@ -30,14 +30,14 @@ class Game extends React.Component<never, { money: number }> {
   }
 
   handleTilePurchase = ():boolean => {
-    const completePurchase = ():void => {
+    const completeTilePurchase = ():void => {
       this.setState(prevState => {
         return { money: prevState.money - 100 }
       })
     }
-    
+
     if (this.state.money >= 100) {
-      completePurchase();
+      completeTilePurchase();
       return true;
     } else {
       return false;
@@ -70,11 +70,11 @@ class Farm extends React.Component<FarmProps, { tiles: number } > {
   constructor(props: FarmProps){
     super(props)
     this.state = {
-      tiles: 1
+      tiles: 0
     }
   }
 
-  handleTileGrowthFinish = ():void => {
+  handleTileGrowthCompletion = ():void => {
     this.props.onTileReadyForHarvest();
   }
 
@@ -87,7 +87,7 @@ class Farm extends React.Component<FarmProps, { tiles: number } > {
           <Tile 
             key={i.toString()}
             tileID={i.toString()}
-            onTileGrowthFinish={this.handleTileGrowthFinish} />
+            onTileGrowthFinish={this.handleTileGrowthCompletion} />
         </li>
       )
     }
