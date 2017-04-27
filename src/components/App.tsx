@@ -45,11 +45,11 @@ class Game extends React.Component<never, { money: number }> {
 
 
 interface FarmProps { onTileReadyForHarvest: any; }
-class Farm extends React.Component<FarmProps, {tiles: JSX.Element[]}> {
+class Farm extends React.Component<FarmProps, { tiles: number } > {
   constructor(props: FarmProps){
     super(props)
     this.state = {
-      tiles: []
+      tiles: 25
     }
   }
 
@@ -57,8 +57,20 @@ class Farm extends React.Component<FarmProps, {tiles: JSX.Element[]}> {
     this.props.onTileReadyForHarvest();
   }
 
-  componentWillMount() {
-    this.addTileToFarm();
+  createFarmGrid = ( tilesToCreate: number ):JSX.Element[] => {
+    let createdTiles = [];
+
+    for(let i = 0; i < tilesToCreate; i++) {
+      createdTiles.push(
+        <li key={i.toString()}>
+          <Tile 
+            tileID={i.toString()}
+            onTileGrowthFinish={this.handleTileGrowthFinish} />
+        </li>
+      )
+    }
+
+    return createdTiles
   }
 
   
@@ -89,7 +101,7 @@ class Farm extends React.Component<FarmProps, {tiles: JSX.Element[]}> {
 
   // farmGrid = this.createFarmGrid(this.props.farmColumns, this.props.farmRows);
 
-  addTileToFarm = () => {
+  /*addTileToFarm = () => {
     this.state.tiles.push(<li>
       <Tile
         key={this.state.tiles.length}
@@ -97,13 +109,12 @@ class Farm extends React.Component<FarmProps, {tiles: JSX.Element[]}> {
         onTileGrowthFinish={this.handleTileGrowthFinish} />
       </li>
     )
-  }
+  }*/
 
   render() {
+    // this.addTileToFarm();
     return (
-      <div className="tile-container">
-        <ul>{this.state.tiles}</ul>
-      </div>
+      <ul className="tile-ul">{this.createFarmGrid(this.state.tiles)}</ul>
     )
   }
 }

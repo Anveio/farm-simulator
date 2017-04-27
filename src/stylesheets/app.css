@@ -19,13 +19,19 @@ h1 {
   height: 100%;
   text-align: center; 
   justify-content: center;
-  display: block;
+  display: flex;
 }
 
-.tile-container {
+.tile-ul {
+  /* Each tile is 3em (base 25px) large */
+  font-size: 25px;
+  max-height: 16em;
+  max-width: 16em;
   position: relative;
   justify-content: center;
   display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .tile {
