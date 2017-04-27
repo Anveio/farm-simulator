@@ -15,19 +15,29 @@ class MouseData {
   constructor(readonly hovering: boolean, readonly  mouseDown: boolean) {} 
 }
 
-class Game extends React.Component<never, never> {
+class Game extends React.Component<any, any> {
+  constructor(props: any){
+    super(props)
+    this.state = {
+      money: 0
+    }
+  }
 
-  handleIncomingRevenue = ():number => {
-    return 1;
+  
+
+  handleIncomingHarvest = ():void => {
+    this.setState((prevState) => {
+      return { money: prevState.money + 1 }
+    })
   }
 
   render() {
     return(
       <div className="game-container">
         <div className="farm">
-          <Farm farmRows={5} farmColumns={5} onTileReadyForHarvest={this.handleIncomingRevenue}/>
+          <Farm farmRows={5} farmColumns={5} onTileReadyForHarvest={this.handleIncomingHarvest}/>
         </div>
-        <MoneyCounter incomingRevenue={this.handleIncomingRevenue()} />
+        <MoneyCounter money={this.state.money} />
       </div>
     )
   }
