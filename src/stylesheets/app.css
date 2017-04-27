@@ -1,9 +1,10 @@
 html {
-  font-size: calc(112.5% + 0.5vw)
+  
 }
 
 h1 {
   text-align: center;
+  font-size: calc(112.5% + 0.5vw)
 }
 
 .app-container {
@@ -40,15 +41,13 @@ h1 {
 
 .tile-ul {
   /* Each tile is 3em (base 25px) + 3px border */
+  width: 50%;
   font-size: 25px;
   max-height: 16em;
   max-width: 16em;
-  position: relative;
   justify-content: flex-start;
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-content: space-between;
+  flex-flow: row wrap;
 }
 
 .tile {
@@ -81,7 +80,7 @@ h1 {
   padding: 0;
 
   display: flex;
-  margin: 3px;
+  margin: 2px;
 }
 
 .add-tile-btn {

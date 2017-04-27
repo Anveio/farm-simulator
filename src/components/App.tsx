@@ -6,7 +6,6 @@ export default class App extends React.Component<never, never> {
     return(
       <div>
         <Game />
-        <Game />
       </div>
     )  
   }
@@ -25,8 +24,14 @@ class Game extends React.Component<never, { money: number }> {
   }
 
   handleIncomingHarvest = ():void => {
-    this.setState((prevState) => {
+    this.setState(prevState => {
       return { money: prevState.money + 1 }
+    })
+  }
+
+  handleTilePurchase = ():void => {
+    this.setState(prevState => {
+      return { money: prevState.money - 100 }
     })
   }
 
@@ -37,7 +42,9 @@ class Game extends React.Component<never, { money: number }> {
           <div className="game-container">
             <MoneyCounter money={this.state.money} />
             <div className="farm">
-              <Farm onTileReadyForHarvest={this.handleIncomingHarvest} />
+              <Farm 
+                onTileReadyForHarvest={this.handleIncomingHarvest} 
+                onTilePurchase={this.handleTilePurchase}/>
             </div>
           </div>
         </div>
@@ -49,12 +56,12 @@ class Game extends React.Component<never, { money: number }> {
   }
 }
 
-interface FarmProps { onTileReadyForHarvest: any; }
+interface FarmProps { onTileReadyForHarvest: any; onTilePurchase: any; }
 class Farm extends React.Component<FarmProps, { tiles: number } > {
   constructor(props: FarmProps){
     super(props)
     this.state = {
-      tiles: 24
+      tiles: 1
     }
   }
 
@@ -79,11 +86,19 @@ class Farm extends React.Component<FarmProps, { tiles: number } > {
     return createdTiles
   }
 
+  addTileToFarm = ():void => {
+    this.props.onTilePurchase();
+
+    this.setState(prevState => {
+      return { tiles: prevState.tiles += 1 }
+    })
+  }
+
   render() {
     return (
       <ul className="tile-ul">
         {this.createFarmGrid(this.state.tiles)}
-        <li className="add-tile-li"> <button className="add-tile-btn">+</button> </li>
+        <li className="add-tile-li"> <button className="add-tile-btn" onClick={this.addTileToFarm}>+</button> </li>
       </ul>
     )
   }
