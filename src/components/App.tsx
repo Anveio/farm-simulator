@@ -1,10 +1,11 @@
 import * as React from "react";
-import MoneyCounter from "./MoneyCounter";
+import { MoneyCounter } from "./MoneyCounter";
 
 export default class App extends React.Component<never, never> {
   render() {
     return(
       <div>
+        <Game />
         <Game />
       </div>
     )  
@@ -15,15 +16,13 @@ class MouseData {
   constructor(readonly hovering: boolean, readonly  mouseDown: boolean) {} 
 }
 
-class Game extends React.Component<any, any> {
-  constructor(props: any){
+class Game extends React.Component<never, { money: number }> {
+  constructor(props: never){
     super(props)
     this.state = {
       money: 0
     }
   }
-
-  
 
   handleIncomingHarvest = ():void => {
     this.setState((prevState) => {
@@ -32,12 +31,12 @@ class Game extends React.Component<any, any> {
   }
 
   render() {
-    return(
+    return (
       <div className="game-container">
-        <div className="farm">
-          <Farm farmRows={5} farmColumns={5} onTileReadyForHarvest={this.handleIncomingHarvest}/>
-        </div>
         <MoneyCounter money={this.state.money} />
+        <div className="farm">
+          <Farm farmRows={5} farmColumns={5} onTileReadyForHarvest={this.handleIncomingHarvest} />
+        </div>
       </div>
     )
   }
@@ -65,7 +64,7 @@ class Farm extends React.Component<FarmProps, never> {
           <li key={[x, y].toString()}>
             <Tile 
               tileID={[x, y].toString()}
-              onTileGrowthFinish={this.handleTileGrowthFinish}/>
+              onTileGrowthFinish={this.handleTileGrowthFinish} />
           </li>
         )
       }

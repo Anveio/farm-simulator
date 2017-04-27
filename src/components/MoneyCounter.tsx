@@ -1,19 +1,11 @@
 import * as React from "react";
 
+
 interface MoneyCounterProps { money: number }
-export default class MoneyCounter extends React.Component<MoneyCounterProps, never> {
-  constructor(props:MoneyCounterProps){
-    super(props)
-  }
-
-  
-
-
-  render() {
-    return(
-      <div className="money-display">
-        <h3>{this.props.money}</h3>
-      </div>
-    )
-  }
+export const MoneyCounter = (props: MoneyCounterProps) => {
+  return (
+    <div className="money-display">
+      <h3>{props.money}</h3>
+    </div>
+  )
 }
