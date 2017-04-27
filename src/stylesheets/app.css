@@ -1,4 +1,6 @@
-
+html {
+  font-size: calc(112.5% + 0.5vw)
+}
 
 h1 {
   text-align: center;
