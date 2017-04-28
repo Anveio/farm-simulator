@@ -2,6 +2,7 @@ import * as React from "react";
 
 import Menu from "./Menu";
 import Farm from "./Farm";
+import FarmInfo from "../classes/farmInfo";
 
 
 export default class App extends React.Component<never, never> {
@@ -15,13 +16,13 @@ export default class App extends React.Component<never, never> {
 }
 
 
-interface GameState { money: number; currentlySelectedFarm: JSX.Element | null }
+interface GameState { money: number; selectedFarmInfo: FarmInfo | null }
 class Game extends React.Component<never, GameState> {
   constructor(props: never){
     super(props)
     this.state = {
       money: 10000,
-      currentlySelectedFarm: null
+      selectedFarmInfo: null
     }
   }
 
@@ -46,8 +47,8 @@ class Game extends React.Component<never, GameState> {
     }
   }
 
-  handleFarmSelection = (farm: JSX.Element): void => {
-    this.setState({ currentlySelectedFarm: farm })
+  handleFarmSelection = (farmInfo: FarmInfo): void => {
+    this.setState({ selectedFarmInfo: farmInfo })
   }
 
   render() {
@@ -66,7 +67,7 @@ class Game extends React.Component<never, GameState> {
         </div>
         <Menu 
           money={this.state.money}
-          currentlySelectedFarm={this.state.currentlySelectedFarm} />
+          selectedFarmInfo={this.state.selectedFarmInfo} />
       </div>
     )
   }
@@ -85,8 +86,8 @@ class FarmGrid extends React.Component<FarmGridProps, { farms: number } > {
     this.props.onFarmReadyForHarvest();
   }
 
-  handleFarmSelection = (farm: JSX.Element): void => {
-    this.props.onFarmSelection(farm);
+  handleFarmSelection = (farmInfo: FarmInfo): void => {
+    this.props.onFarmSelection(farmInfo);
   }
 
   buildFarmGrid = (farmsToCreate: number):JSX.Element[] => {
