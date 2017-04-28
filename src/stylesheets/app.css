@@ -1,7 +1,13 @@
-html {
+/* Typography */
+
+html, body, #root, .app-container {
   font-family: Arial;
-  font-size: calc(112.5% + 0.5vw)
+  font-size: calc(112.5% + 0.5vw);
+  height: 100%;
+  min-height: 100%;
+  margin: 0;
 }
+
 
 h1 {
   text-align: center;
@@ -9,9 +15,16 @@ h1 {
 }
 
 p {
-  font-size: 1em;
+  font-size: calc(75% + 0.5vw);
 }
 
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Columns */
 .app-container {
   min-width: 250px;
 
@@ -24,13 +37,15 @@ p {
   display: flex;
   width: 100%;
 
+  background-color: #CFD8DC;
+
   min-width: 250px;
   flex: 2
 }
 
 .menu-column {
   flex-direction: column;
-  margin: 0 auto auto auto;
+  margin: 0;
   min-width: 150px; 
 
   width: 100%;
@@ -38,19 +53,13 @@ p {
   flex: 1;
   order: 1;
   
+  background-color: #B0BEC5;
   display: flex;
   text-align: center;
   font-size: 14px;
 }
 
-h1 #menu-title {
-  /*font-size: calc(112.5% + 0.5vw)*/
-  font-size: 2em;
-}
-
-h1 #money-header {
-  font-size: 4em;
-}
+/* Game Column */
 
 .game-container {
   width: 100%;
@@ -64,14 +73,13 @@ h1 #money-header {
 }
 .farm-grid {
   width: 100%;
-  margin: 5px 10px 10px 10px ;
+  margin: 0 ;
 
   display: flex;
   justify-content: center;
 }
 
 .farm-ul {
-  /* Each farm is 3em (base 25px) + 3px border */
   width: 100%;
   margin: auto;
 
@@ -80,7 +88,6 @@ h1 #money-header {
   justify-content: flex-start;
   display: flex;
   flex-flow: row wrap;
-
 }
 
 .farm {
@@ -105,10 +112,11 @@ h1 #money-header {
   background-color: rgb(0, 150, 0);
 }
 
-.money-display {
+.farm-info {
+  margin: auto;
+
   text-align: center;
   justify-content: center;
-  position: relative;
 }
 
 .add-farm-li {
@@ -123,23 +131,49 @@ h1 #money-header {
 .add-farm-btn {
   justify-content: center;
 
-  background-color: white;
-  border: 4px dashed #BBDEFB;
+  background-color: #eceff1;
+  border: 4px dashed #90caf9;
 }
 
-ul {
-  list-style: none;
+/* Menu Column */
+
+.menu {
+  margin: 10px auto 0 auto;
+  height: 100%;
+  width: 75%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+
+  
+  background-color: #00BFA5;
+}
+
+#menu-title {
+  /*font-size: calc(112.5% + 0.5vw)*/
+  font-size: calc(125% + 0.5vw);
+}
+
+#money-header {
+  font-size: calc(187.5% + 0.5vw);
+}
+
+
+
+.money-display {
   margin: 0;
-  padding: 0;
+  text-align: center;
+  width: 100%;
+
+  background-color: #64FFDA;
 }
 
-li {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
 
-.farm-info {
-  border: 4px solid blue;
-}
+
+
+
+
+
 

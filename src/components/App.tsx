@@ -21,12 +21,12 @@ class Game extends React.Component<never, GameState> {
   constructor(props: never){
     super(props)
     this.state = {
-      money: 0,
+      money: 100,
       selectedFarmInfo: null
     }
   }
 
-  handleIncomingHarvest = (): void => {
+  handleIncomingRevenue = (): void => {
     this.setState(prevState => {
       return { money: prevState.money + 1 }
     })
@@ -59,7 +59,7 @@ class Game extends React.Component<never, GameState> {
             <h1> Farm Simulator </h1>
             <div className="farm-grid">
               <FarmGrid 
-                onFarmReadyForHarvest={this.handleIncomingHarvest} 
+                onFarmReadyForHarvest={this.handleIncomingRevenue} 
                 onFarmPurchase={this.handleFarmPurchase}
                 onFarmSelection={this.handleFarmSelection} />
             </div>
@@ -78,7 +78,7 @@ class FarmGrid extends React.Component<FarmGridProps, { farms: number } > {
   constructor(props: FarmGridProps){
     super(props)
     this.state = {
-      farms: 50
+      farms: 25
     }
   }
 
