@@ -44,14 +44,14 @@ export default class TileGrowthBar extends React.Component<TileGrowthBarProps, {
 
     this.setState(prevState => {
       return { 
-        progress: Math.min(Math.max(prevState.progress + (1 * growthMultiplier), 1), 100),
+        progress: prevState.progress + (1 * growthMultiplier),
       }
     })
   }
 
   // Clicking on the progress bar doesn't trigger tile selection without this.
-  // Wierd idiosyncracy, maybe can be avoided by structuring the HTML differently?
-  handleMouseDown = (): void => {
+  // Wierd idiosyncracy, maybe can be avoided by structuring the HTMl differently?
+  handleMouseDown = ():void => {
     this.props.onMouseDown();
   }
 
