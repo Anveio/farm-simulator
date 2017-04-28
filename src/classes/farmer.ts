@@ -8,7 +8,7 @@ export default class Farmer {
   }
 
   private generateRandomQuote = () => {
-    return "I am a Farm God";
+    return repo.newQuote();
   }
 
   readonly name: string = this.generateRandomName();
