@@ -1,6 +1,5 @@
 {
-  "name": "polaris-webpack-example",
-  "private": true,
+  "name": "farm-simulator",
   "version": "1.0.0",
   "description": "A Polaris example application using webpack",
   "main": "index.js",
@@ -10,12 +9,12 @@
     "build": "webpack"
   },
   "dependencies": {
-    "@shopify/polaris": "^1.0.1",
     "express": "^4.15.2",
     "react": "^15.4.2",
     "react-dom": "^15.4.2"
   },
   "devDependencies": {
+    "@types/node": "^7.0.14",
     "@types/react": "^15.0.22",
     "@types/react-dom": "^0.14.23",
     "@types/react-router": "^4.0.4",
