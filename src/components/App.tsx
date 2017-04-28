@@ -15,11 +15,13 @@ export default class App extends React.Component<never, never> {
 }
 
 
-class Game extends React.Component<never, { money: number }> {
+interface GameState { money: number; currentlySelectedTile: JSX.Element | null }
+class Game extends React.Component<never, GameState> {
   constructor(props: never){
     super(props)
     this.state = {
-      money: 10000
+      money: 10000,
+      currentlySelectedTile: null
     }
   }
 
@@ -44,6 +46,10 @@ class Game extends React.Component<never, { money: number }> {
     }
   }
 
+  handleTileSelection = (tile: JSX.Element):void => {
+    this.setState({ currentlySelectedTile: tile })
+  }
+
   render() {
     return (
       <div className="app-container">
@@ -53,17 +59,20 @@ class Game extends React.Component<never, { money: number }> {
             <div className="farm">
               <Farm 
                 onTileReadyForHarvest={this.handleIncomingHarvest} 
-                onTilePurchase={this.handleTilePurchase}/>
+                onTilePurchase={this.handleTilePurchase}
+                onTileSelection={this.handleTileSelection} />
             </div>
           </div>
         </div>
-        <Menu money={this.state.money}/>
+        <Menu 
+          money={this.state.money}
+          currentlySelectedTile={this.state.currentlySelectedTile} />
       </div>
     )
   }
 }
 
-interface FarmProps { onTileReadyForHarvest: any; onTilePurchase: any; }
+interface FarmProps { onTileReadyForHarvest: any; onTilePurchase: any; onTileSelection: any; }
 class Farm extends React.Component<FarmProps, { tiles: number } > {
   constructor(props: FarmProps){
     super(props)
@@ -76,6 +85,10 @@ class Farm extends React.Component<FarmProps, { tiles: number } > {
     this.props.onTileReadyForHarvest();
   }
 
+  handleTileSelection = (tile: JSX.Element):void => {
+    this.props.onTileSelection(tile);
+  }
+
   createFarmGrid = ( tilesToCreate: number ):JSX.Element[] => {
     let createdTiles = [];
 
@@ -84,8 +97,9 @@ class Farm extends React.Component<FarmProps, { tiles: number } > {
         <li key={i.toString()}>
           <Tile 
             key={i.toString()}
-            tileID={i.toString()}
-            onTileGrowthFinish={this.handleTileGrowthCompletion} />
+            tileID={(i + 1).toString()}
+            onTileGrowthFinish={this.handleTileGrowthCompletion}
+            onSelection={this.handleTileSelection} />
         </li>
       )
     }

@@ -1,7 +1,7 @@
 {
   "name": "farm-simulator",
   "version": "1.0.0",
-  "description": "A Polaris example application using webpack",
+  "description": "An incremental game.",
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --hot --inline --watch-poll --quiet --config webpack.config.js",
@@ -15,7 +15,7 @@
   },
   "devDependencies": {
     "@types/node": "^7.0.14",
-    "@types/react": "^15.0.22",
+    "@types/react": "^15.0.23",
     "@types/react-dom": "^0.14.23",
     "@types/react-router": "^4.0.4",
     "awesome-typescript-loader": "^3.1.2",
