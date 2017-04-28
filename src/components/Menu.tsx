@@ -7,7 +7,7 @@ export default class Menu extends React.Component<any, any> {
       <div className="menu-column">
         <h2 id="menu-title"> Menu </h2>
         <MoneyCounter money={this.props.money} />
-        <p> {this.props.currentlySelectedTile || "No Tile Selected"} </p>
+        <p> {this.props.currentlySelectedFarm || "No Farm Selected"} </p>
       </div>
     )
   }

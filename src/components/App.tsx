@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import Menu from "./Menu";
-import Tile from "./Tile";
+import Farm from "./Farm";
 
 
 export default class App extends React.Component<never, never> {
@@ -15,13 +15,13 @@ export default class App extends React.Component<never, never> {
 }
 
 
-interface GameState { money: number; currentlySelectedTile: JSX.Element | null }
+interface GameState { money: number; currentlySelectedFarm: JSX.Element | null }
 class Game extends React.Component<never, GameState> {
   constructor(props: never){
     super(props)
     this.state = {
       money: 10000,
-      currentlySelectedTile: null
+      currentlySelectedFarm: null
     }
   }
 
@@ -31,23 +31,23 @@ class Game extends React.Component<never, GameState> {
     })
   }
 
-  handleTilePurchase = (): boolean => {
-    const completeTilePurchase = (): void => {
+  handleFarmPurchase = (): boolean => {
+    const completeFarmPurchase = (): void => {
       this.setState(prevState => {
         return { money: prevState.money - 100 }
       })
     }
 
     if (this.state.money >= 100) {
-      completeTilePurchase();
+      completeFarmPurchase();
       return true;
     } else {
       return false;
     }
   }
 
-  handleTileSelection = (tile: JSX.Element): void => {
-    this.setState({ currentlySelectedTile: tile })
+  handleFarmSelection = (farm: JSX.Element): void => {
+    this.setState({ currentlySelectedFarm: farm })
   }
 
   render() {
@@ -56,75 +56,75 @@ class Game extends React.Component<never, GameState> {
         <div className="game-column">
           <div className="game-container">
             <h1> Farm Simulator </h1>
-            <div className="farm">
-              <Farm 
-                onTileReadyForHarvest={this.handleIncomingHarvest} 
-                onTilePurchase={this.handleTilePurchase}
-                onTileSelection={this.handleTileSelection} />
+            <div className="farm-grid">
+              <FarmGrid 
+                onFarmReadyForHarvest={this.handleIncomingHarvest} 
+                onFarmPurchase={this.handleFarmPurchase}
+                onFarmSelection={this.handleFarmSelection} />
             </div>
           </div>
         </div>
         <Menu 
           money={this.state.money}
-          currentlySelectedTile={this.state.currentlySelectedTile} />
+          currentlySelectedFarm={this.state.currentlySelectedFarm} />
       </div>
     )
   }
 }
 
-interface FarmProps { onTileReadyForHarvest: any; onTilePurchase: any; onTileSelection: any; }
-class Farm extends React.Component<FarmProps, { tiles: number } > {
-  constructor(props: FarmProps){
+interface FarmGridProps { onFarmReadyForHarvest: any; onFarmPurchase: any; onFarmSelection: any; }
+class FarmGrid extends React.Component<FarmGridProps, { farms: number } > {
+  constructor(props: FarmGridProps){
     super(props)
     this.state = {
-      tiles: 5
+      farms: 5
     }
   }
 
-  handleTileGrowthBarFinish = (): void => {
-    this.props.onTileReadyForHarvest();
+  handleFarmGrowthBarFinish = (): void => {
+    this.props.onFarmReadyForHarvest();
   }
 
-  handleTileSelection = (tile: JSX.Element): void => {
-    this.props.onTileSelection(tile);
+  handleFarmSelection = (farm: JSX.Element): void => {
+    this.props.onFarmSelection(farm);
   }
 
-  createFarmGrid = (tilesToCreate: number):JSX.Element[] => {
-    let createdTiles = [];
+  buildFarmGrid = (farmsToCreate: number):JSX.Element[] => {
+    let createdFarms: JSX.Element[] = [];
 
-    for(let i = 0; i < tilesToCreate; i++) {
-      createdTiles.push(
+    for(let i = 0; i < farmsToCreate; i++) {
+      createdFarms.push(
         <li key={i.toString()}>
-          <Tile 
+          <Farm 
             key={i.toString()}
-            tileID={(i + 1).toString()}
-            onTileGrowthBarFinish={this.handleTileGrowthBarFinish}
-            onSelection={this.handleTileSelection} />
+            farmID={(i + 1).toString()}
+            onFarmGrowthBarFinish={this.handleFarmGrowthBarFinish}
+            onSelection={this.handleFarmSelection} />
         </li>
       )
     }
 
-    return createdTiles
+    return createdFarms
   }
 
-  addTileToFarm = (e: React.MouseEvent<HTMLButtonElement>): void => {
+  addFarmToFarmGrid = (e: React.MouseEvent<HTMLButtonElement>): void => {
     e.preventDefault(); // Maybe not necessary
 
-    if (this.props.onTilePurchase() === true) {
+    if (this.props.onFarmPurchase() === true) {
       this.setState(prevState => {
-        return { tiles: prevState.tiles += 1 }
+        return { farms: prevState.farms += 1 }
       })
     }
   }
 
   render() {
     return (
-      <ul className="tile-ul">
-        {this.createFarmGrid(this.state.tiles)}
-        <li className="add-tile-li"> 
+      <ul className="farm-ul">
+        {this.buildFarmGrid(this.state.farms)}
+        <li className="add-farm-li"> 
           <button 
-            className="tile add-tile-btn" 
-            onClick={this.addTileToFarm}>
+            className="farm add-farm-btn" 
+            onClick={this.addFarmToFarmGrid}>
             +</button> </li>
       </ul>
     )

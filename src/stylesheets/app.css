@@ -51,13 +51,11 @@ h1 #money-header {
 .farm {
   width:100%;
   height: 100%;
-  text-align: center; 
-  justify-content: center;
   display: flex;
 }
 
-.tile-ul {
-  /* Each tile is 3em (base 25px) + 3px border */
+.farm-ul {
+  /* Each farm is 3em (base 25px) + 3px border */
   width: 80%;
   font-size: 25px;
   max-height: 16em;
@@ -67,7 +65,7 @@ h1 #money-header {
   flex-flow: row wrap;
 }
 
-.tile {
+.farm {
   background-color: brown;
   border: 2px solid black;
   flex: 1;
@@ -76,11 +74,11 @@ h1 #money-header {
   width: 3em;
 }
 
-.tile:hover {
+.farm:hover {
   border: 2px solid yellow;
 }
 
-.tile-growth-progress {
+.farm-growth-progress {
   display: block;
 
   background-color: rgb(0, 150, 0);
@@ -92,7 +90,7 @@ h1 #money-header {
   position: relative;
 }
 
-.add-tile-li {
+.add-farm-li {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -101,7 +99,7 @@ h1 #money-header {
   margin: 2px;
 }
 
-.add-tile-btn {
+.add-farm-btn {
   background-color: white;
   border: 4px dashed #BBDEFB;
 }
