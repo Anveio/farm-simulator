@@ -25,14 +25,14 @@ class Game extends React.Component<never, GameState> {
     }
   }
 
-  handleIncomingHarvest = ():void => {
+  handleIncomingHarvest = (): void => {
     this.setState(prevState => {
       return { money: prevState.money + 1 }
     })
   }
 
-  handleTilePurchase = ():boolean => {
-    const completeTilePurchase = ():void => {
+  handleTilePurchase = (): boolean => {
+    const completeTilePurchase = (): void => {
       this.setState(prevState => {
         return { money: prevState.money - 100 }
       })
@@ -46,7 +46,7 @@ class Game extends React.Component<never, GameState> {
     }
   }
 
-  handleTileSelection = (tile: JSX.Element):void => {
+  handleTileSelection = (tile: JSX.Element): void => {
     this.setState({ currentlySelectedTile: tile })
   }
 
@@ -81,15 +81,15 @@ class Farm extends React.Component<FarmProps, { tiles: number } > {
     }
   }
 
-  handleTileGrowthCompletion = ():void => {
+  handleTileGrowthBarFinish = (): void => {
     this.props.onTileReadyForHarvest();
   }
 
-  handleTileSelection = (tile: JSX.Element):void => {
+  handleTileSelection = (tile: JSX.Element): void => {
     this.props.onTileSelection(tile);
   }
 
-  createFarmGrid = ( tilesToCreate: number ):JSX.Element[] => {
+  createFarmGrid = (tilesToCreate: number):JSX.Element[] => {
     let createdTiles = [];
 
     for(let i = 0; i < tilesToCreate; i++) {
@@ -98,7 +98,7 @@ class Farm extends React.Component<FarmProps, { tiles: number } > {
           <Tile 
             key={i.toString()}
             tileID={(i + 1).toString()}
-            onTileGrowthFinish={this.handleTileGrowthCompletion}
+            onTileGrowthBarFinish={this.handleTileGrowthBarFinish}
             onSelection={this.handleTileSelection} />
         </li>
       )
@@ -107,7 +107,7 @@ class Farm extends React.Component<FarmProps, { tiles: number } > {
     return createdTiles
   }
 
-  addTileToFarm = (e: React.MouseEvent<HTMLButtonElement>):void => {
+  addTileToFarm = (e: React.MouseEvent<HTMLButtonElement>): void => {
     e.preventDefault(); // Maybe not necessary
 
     if (this.props.onTilePurchase() === true) {
