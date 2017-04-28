@@ -21,7 +21,7 @@ class Game extends React.Component<never, GameState> {
   constructor(props: never){
     super(props)
     this.state = {
-      money: 10000,
+      money: 0,
       selectedFarmInfo: null
     }
   }
@@ -78,7 +78,7 @@ class FarmGrid extends React.Component<FarmGridProps, { farms: number } > {
   constructor(props: FarmGridProps){
     super(props)
     this.state = {
-      farms: 5
+      farms: 50
     }
   }
 

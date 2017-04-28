@@ -12,6 +12,7 @@ export default class Menu extends React.Component<MenuProps, never> {
           <p>Farm #: {this.props.selectedFarmInfo.farmID}</p>
           <p>Owner: {this.props.selectedFarmInfo.farmer.name}</p>
           <p>"{this.props.selectedFarmInfo.farmer.quote}" </p>
+          <p>Farm Efficiency: {this.props.selectedFarmInfo.efficiency}</p>
         </div>  
       )
     } else {
