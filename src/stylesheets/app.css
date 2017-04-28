@@ -13,6 +13,8 @@ p {
 }
 
 .app-container {
+  min-width: 250px;
+
   display: flex;
   flex-flow: row wrap;
   width: 100%;
@@ -20,15 +22,23 @@ p {
 
 .game-column {
   display: flex;
-  max-width: 80%;
+  width: 100%;
+
   min-width: 250px;
   flex: 2
 }
 
 .menu-column {
+  flex-direction: column;
+  margin: auto;
+  min-width: 150px; 
+
+  width: 100%;
+
   flex: 1;
   order: 1;
   
+  display: flex;
   text-align: center;
   font-size: 14px;
 }
@@ -43,9 +53,12 @@ h1 #money-header {
 }
 
 .game-container {
-  /*flex: 1;*/
+  width: 100%;
+
   order: 2;
   margin: auto;
+
+  flex-wrap: wrap;
 }
 
 .farm {
@@ -57,12 +70,15 @@ h1 #money-header {
 .farm-ul {
   /* Each farm is 3em (base 25px) + 3px border */
   width: 80%;
+  margin: auto;
+
   font-size: 25px;
   max-height: 16em;
   max-width: 16em;
   justify-content: flex-start;
   display: flex;
   flex-flow: row wrap;
+
 }
 
 .farm {
@@ -118,4 +134,7 @@ li {
   padding: 0;
 }
 
+.farm-info {
+  border: 4px solid blue;
+}
 

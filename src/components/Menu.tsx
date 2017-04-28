@@ -4,27 +4,27 @@ import FarmInfo from "../classes/farmInfo";
 
 
 interface MenuProps { money: number; selectedFarmInfo: FarmInfo | null}
-export default class Menu extends React.Component<MenuProps, any> {
+export default class Menu extends React.Component<MenuProps, never> {
   farmSelection = () => {
     if (this.props.selectedFarmInfo !== null) {
       return(
-        <div>    
+        <div className="farm-info">    
           <p>Farm #: {this.props.selectedFarmInfo.farmID}</p>
           <p>Owner: {this.props.selectedFarmInfo.farmer.name}</p>
           <p>"{this.props.selectedFarmInfo.farmer.quote}" </p>
         </div>  
       )
     } else {
-      return ( <h3>No Tile Selected</h3> )
+      return ( <div className="farm-info"><h3>No Tile Selected</h3></div> )
     }
   }
 
   render() {
     return (
       <div className="menu-column">
-        <h2 id="menu-title"> Menu </h2>
-        <MoneyCounter money={this.props.money} />
-        <div>
+        <div className="menu">
+          <h2 id="menu-title"> Menu </h2>
+          <MoneyCounter money={this.props.money} />
           {this.farmSelection()}
         </div>
       </div>
