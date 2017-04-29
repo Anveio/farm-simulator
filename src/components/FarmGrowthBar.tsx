@@ -2,7 +2,8 @@ import * as React from "react";
 
 interface FarmGrowthBarProps { 
   gpID: string; 
-  growthRate: number; 
+  growthRate: number;
+  growthMultiplier: number;
   onGrowthFinish: any
   onMouseDown: any;
 }
@@ -33,7 +34,7 @@ export default class FarmGrowthBar extends React.Component<FarmGrowthBarProps, {
     })
   }
 
-  tick(growthMultiplier:number = 1):void {
+  tick(growthMultiplier:number = this.props.growthMultiplier):void {
     if (this.state.progress >= 100) {
       this.props.onGrowthFinish();
 

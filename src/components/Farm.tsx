@@ -92,6 +92,7 @@ export default class Farm extends React.Component<FarmProps, MouseData> {
           key={this.props.farmID}
           gpID={this.props.farmID}
           growthRate={this.calculateFarmGrowthRate(this.state)}
+          growthMultiplier={this.farmInfo.farmer.efficiency}
           onGrowthFinish={this.sendGrowthFinishUpstream}
           onMouseDown={this.sendFarmSelectionUpstream} />
       </div>
