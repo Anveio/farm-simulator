@@ -17,5 +17,5 @@ export default class Farmer {
 
   readonly name: string = this.generateRandomName();
   readonly quote: string = this.generateRandomQuote();
-  public efficiency: number = this.generateRandomStatEfficiency();
+  readonly efficiency: number = this.generateRandomStatEfficiency();
 }

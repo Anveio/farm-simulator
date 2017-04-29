@@ -78,7 +78,7 @@ class FarmGrid extends React.Component<FarmGridProps, { farms: number } > {
   constructor(props: FarmGridProps){
     super(props)
     this.state = {
-      farms: 1
+      farms: 25
     }
   }
 

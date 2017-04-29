@@ -16,6 +16,7 @@ export default class FarmGrowthBar extends React.Component<FarmGrowthBarProps, {
     }
   }
 
+  growthRate = this.props.growthRate;
   
   tickRate: number = 16.67;
 
@@ -28,8 +29,9 @@ export default class FarmGrowthBar extends React.Component<FarmGrowthBarProps, {
   componentWillReceiveProps(nextProps: FarmGrowthBarProps) {
     process.nextTick(() => {
       clearInterval(this.ticker)
+      this.growthRate = nextProps.growthRate;
       this.ticker = setInterval(() =>
-        this.tick(nextProps.growthRate), 
+        this.tick(nextProps.growthMultiplier), 
         this.tickRate
       )
     })
@@ -46,7 +48,7 @@ export default class FarmGrowthBar extends React.Component<FarmGrowthBarProps, {
 
     this.setState(prevState => {
       return { 
-        progress: prevState.progress + (0.1 * growthMultiplier),
+        progress: prevState.progress + (0.1 * growthMultiplier * this.growthRate),
       }
     })
   }
