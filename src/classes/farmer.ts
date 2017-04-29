@@ -4,11 +4,11 @@ const repo = new NameRepo;
 
 export default class Farmer {
   private generateRandomName = () => {
-    return repo.newName()
+    return repo.newFarmerName()
   }
 
   private generateRandomQuote = () => {
-    return repo.newQuote();
+    return repo.newFarmQuote();
   }
 
   private generateRandomStatEfficiency = () => {

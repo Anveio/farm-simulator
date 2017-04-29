@@ -16,7 +16,8 @@ export default class FarmGrowthBar extends React.Component<FarmGrowthBarProps, {
     }
   }
 
-  tickRate: number = 50;
+  
+  tickRate: number = 16.67;
 
   ticker: any;
   componentDidMount():void {
@@ -45,7 +46,7 @@ export default class FarmGrowthBar extends React.Component<FarmGrowthBarProps, {
 
     this.setState(prevState => {
       return { 
-        progress: prevState.progress + (1 * growthMultiplier),
+        progress: prevState.progress + (0.1 * growthMultiplier),
       }
     })
   }

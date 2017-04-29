@@ -8,8 +8,9 @@ export default class Menu extends React.Component<MenuProps, never> {
   farmSelection = () => {
     if (this.props.selectedFarmInfo !== null) {
       return(
-        <div className="farm-info">    
-          <p>Farm #: {this.props.selectedFarmInfo.farmID}</p>
+        <div className="farm-info">
+          <h3>Farm Info:</h3>    
+          <p>"{this.props.selectedFarmInfo.farmName}"</p>
           <p>Owner: {this.props.selectedFarmInfo.farmer.name}</p>
           <p>"{this.props.selectedFarmInfo.farmer.quote}" </p>
           <p>Farm Efficiency: {this.props.selectedFarmInfo.farmer.efficiency}</p>

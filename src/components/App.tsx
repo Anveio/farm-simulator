@@ -78,7 +78,7 @@ class FarmGrid extends React.Component<FarmGridProps, { farms: number } > {
   constructor(props: FarmGridProps){
     super(props)
     this.state = {
-      farms: 25
+      farms: 1
     }
   }
 
@@ -95,7 +95,7 @@ class FarmGrid extends React.Component<FarmGridProps, { farms: number } > {
 
     for(let i = 0; i < farmsToCreate; i++) {
       createdFarms.push(
-        <li key={i.toString()}>
+        <li key={i.toString()} className="farm-li">
           <Farm 
             key={i.toString()}
             farmID={(i + 1).toString()}
@@ -122,7 +122,7 @@ class FarmGrid extends React.Component<FarmGridProps, { farms: number } > {
     return (
       <ul className="farm-ul">
         {this.buildFarmGrid(this.state.farms)}
-        <li className="add-farm-li"> 
+        <li className="farm-li add-farm-li"> 
           <button 
             className="farm add-farm-btn" 
             onClick={this.addFarmToFarmGrid}>
