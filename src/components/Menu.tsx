@@ -12,7 +12,7 @@ export default class Menu extends React.Component<MenuProps, never> {
           <p>Farm #: {this.props.selectedFarmInfo.farmID}</p>
           <p>Owner: {this.props.selectedFarmInfo.farmer.name}</p>
           <p>"{this.props.selectedFarmInfo.farmer.quote}" </p>
-          <p>Farm Efficiency: {this.props.selectedFarmInfo.efficiency}</p>
+          <p>Farm Efficiency: {this.props.selectedFarmInfo.farmer.efficiency}</p>
         </div>  
       )
     } else {
@@ -24,7 +24,7 @@ export default class Menu extends React.Component<MenuProps, never> {
     return (
       <div className="menu-column">
         <div className="menu">
-          <h2 id="menu-title"> Menu </h2>
+          <div id="menu-title"><h2> Menu </h2> </div>
           <MoneyCounter money={this.props.money} />
           {this.farmSelection()}
         </div>

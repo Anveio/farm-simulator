@@ -7,10 +7,5 @@ export default class FarmInfo {
     return new Farmer();
   }
 
-  private generateRandomStatEfficiency = () => {
-    return parseFloat((Math.random() + 1).toFixed(2));
-  }
-
   readonly farmer: Farmer = this.generateRandomFarmer();
-  readonly efficiency: number = this.generateRandomStatEfficiency();
 }

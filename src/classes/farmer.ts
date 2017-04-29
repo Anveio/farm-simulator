@@ -11,6 +11,11 @@ export default class Farmer {
     return repo.newQuote();
   }
 
+  private generateRandomStatEfficiency = () => {
+    return parseFloat((Math.random() + 1).toFixed(2));
+  }
+
   readonly name: string = this.generateRandomName();
   readonly quote: string = this.generateRandomQuote();
+  public efficiency: number = this.generateRandomStatEfficiency();
 }
