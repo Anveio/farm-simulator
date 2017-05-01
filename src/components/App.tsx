@@ -23,7 +23,7 @@ class Game extends React.Component<never, GameState> {
   constructor(props: never) {
     super(props)
     this.state = {
-      money: 10000000000,
+      money: 350,
       selectedFarmInfo: null
     }
   }
@@ -34,19 +34,18 @@ class Game extends React.Component<never, GameState> {
     })
   }
 
-  handleFarmPurchase = (farmCost: number): boolean => {
-    const completeFarmPurchase = (): void => {
-      this.setState(prevState => {
-        return { money: prevState.money - farmCost }
-      })
-    }
-
+  handleFarmPurchaseAttempt = (farmCost: number): boolean => {
     if (this.state.money >= farmCost) {
-      completeFarmPurchase();
       return true;
     } else {
       return false;
     }
+  }
+
+  completeFarmPurchase = (farmCost: number): void => {
+    this.setState(prevState => {
+      return { money: prevState.money - farmCost }
+    })
   }
 
   handleFarmSelection = (farmInfo: FarmInfo): void => {
@@ -64,7 +63,8 @@ class Game extends React.Component<never, GameState> {
             <div className="farm-grid">
               <FarmGrid 
                 onFarmGrowthFinish={this.handleIncomingRevenue} 
-                onFarmPurchase={this.handleFarmPurchase}
+                onFarmPurchase={this.handleFarmPurchaseAttempt}
+                onFarmPurchaseCompletion={this.completeFarmPurchase}
                 onFarmSelection={this.handleFarmSelection} />
             </div>
           </div>
@@ -79,7 +79,8 @@ class Game extends React.Component<never, GameState> {
 
 interface FarmGridProps { 
   onFarmGrowthFinish(revenue: number): void; 
-  onFarmPurchase(currentFarmCount: number): boolean; 
+  onFarmPurchase(farmCost: number): boolean;
+  onFarmPurchaseCompletion(farmCost: number): void;
   onFarmSelection(farmInfo: FarmInfo): void; 
 }
 
@@ -87,7 +88,7 @@ class FarmGrid extends React.Component<FarmGridProps, { farms: number } > {
   constructor(props: FarmGridProps) {
     super(props)
     this.state = {
-      farms: 35
+      farms: 0
     }
   }
 
@@ -117,18 +118,18 @@ class FarmGrid extends React.Component<FarmGridProps, { farms: number } > {
   }
 
   calculateFarmCost = (): number => {
-    const baseCost: number = 720;
-    const coEf: number = 1.550;
+    const baseCost: number = 350;
+    const coEf: number = 1.65;
 
     return (baseCost * (Math.pow(coEf, this.state.farms)));
   }
 
-  
-
   addFarmToFarmGrid = (e: React.MouseEvent<HTMLButtonElement>): void => {
     e.preventDefault(); // Maybe not necessary
+    const farmCost = this.calculateFarmCost()
 
-    if (this.props.onFarmPurchase(this.calculateFarmCost()) === true) {
+    if (this.props.onFarmPurchase(farmCost) === true && this.state.farms < 25) {
+      this.props.onFarmPurchaseCompletion(farmCost);
       this.setState(prevState => {
         return { farms: prevState.farms += 1 }
       })
@@ -137,8 +138,22 @@ class FarmGrid extends React.Component<FarmGridProps, { farms: number } > {
 
   render() {
     const formattedFarmCost = () => {
-      let short = this.calculateFarmCost().toPrecision(3)
-      return parseFloat(short).toExponential();
+      const cost = this.calculateFarmCost();
+      const formatLargeNum = (cost: number): string => {
+        let short = cost.toPrecision(3)
+        return parseFloat(short).toExponential();
+      }
+
+      const formatSmallNum = (cost: number): string => {
+        console.log("small num detected")
+        return parseFloat(cost.toPrecision(3)).toFixed(0);
+      }
+
+      return (cost > parseFloat('1e6')) ? formatLargeNum(cost) : formatSmallNum(cost);      
+    }
+
+    const farmLimitReached = () => {
+      return (this.state.farms < 25)
     }
 
     return (
@@ -146,9 +161,13 @@ class FarmGrid extends React.Component<FarmGridProps, { farms: number } > {
         {this.buildFarmGrid(this.state.farms)}
         <li className="farm-li add-farm-li"> 
           <button 
-            className="farm add-farm-btn" 
-            onClick={this.addFarmToFarmGrid}>
-            {formattedFarmCost()}</button> </li>
+            className="farm add-farm-btn"
+            disabled={!farmLimitReached()} 
+            onClick={this.addFarmToFarmGrid}
+          >
+            {formattedFarmCost()}
+          </button> 
+        </li>
       </ul>
     )
   }
