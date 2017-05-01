@@ -9,7 +9,12 @@ class MouseData {
   constructor(readonly hovering: boolean, readonly  mouseDown: boolean) {} 
 }
 
-interface FarmProps { farmID: string; onFarmGrowthBarFinish(): void; onSelection(farmInfo: FarmInfo): void; }
+interface FarmProps { 
+  farmID: string; 
+  onFarmGrowthBarFinish(revenue: number): void; 
+  onSelection(farmInfo: FarmInfo): void; 
+}
+
 export default class Farm extends React.Component<FarmProps, MouseData> {
   constructor(props: FarmProps){
     super(props)
@@ -32,7 +37,7 @@ export default class Farm extends React.Component<FarmProps, MouseData> {
   }
 
   sendGrowthFinishUpstream = (): void => {
-    this.props.onFarmGrowthBarFinish();
+    this.props.onFarmGrowthBarFinish(this.farmInfo.baseRevenue);
   }
 
   sendFarmSelectionUpstream = (): void => {

@@ -15,7 +15,7 @@ export const FarmMenuCard = (props: {selectedFarmInfo: FarmInfo}) => {
           Revenue: {props.selectedFarmInfo.baseRevenue}
         </h2>
       </div>
-      <div className="farm-flavor-text">
+      <div className="farm-flavor-text-container">
         <p className="farmer-quote">
           "{props.selectedFarmInfo.farmer.quote}" 
         </p> 

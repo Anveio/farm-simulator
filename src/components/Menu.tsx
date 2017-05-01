@@ -21,7 +21,7 @@ export default class Menu extends React.Component<MenuProps, never> {
       <div className="menu-column">
         <div className="menu">
           <MoneyCounter money={this.props.money} />
-          <div id="menu-title"><h2> Menu </h2> </div>
+          {/*<div id="menu-title"><h2> Menu </h2> </div>*/}
           {this.farmSelection()}
         </div>
       </div>

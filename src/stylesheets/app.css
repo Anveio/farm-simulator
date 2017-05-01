@@ -45,30 +45,12 @@ ul {
 }
 
 .menu-column {
-  display: flex;
-  flex-direction: column;
   flex: 1;
   order: 2;
   margin: 0;
   background-color: #B0BEC5;
   text-align: center;
   font-size: 14px;
-}
-
-@media (max-width: 600px) {
-  .app-container {
-    flex-flow: column wrap;
-  }
-
-  .game-column {
-    order: 2;
-  }
-  .menu-column {
-    order: 1;
-  }
-  #game-title-container {
-    display: none;
-  }
 }
 
 /* Game Column */
@@ -103,15 +85,17 @@ ul {
 }
 
 .farm-ul {
+  margin: 1em 0 1em 0;
   display: flex;
+  font-size: calc(28.5% + 1.0vw);
   flex-flow: row wrap;
   justify-content: flex-start;
   font-size: 25px;
-  width: 85%;
+  width: 75%;
 }
 
 .farm-li {
-  margin: 10px 0 10px 20px;
+  margin: 0.4em;
 }
 
 .farm {
@@ -190,13 +174,13 @@ ul {
 
 .farm-name-container {
   margin: 0;
-  border-bottom: 20px solid #c17900;
+  /*border-bottom: 20px solid #c17900;*/
   text-align: center;
   width: 100%;
 
   font-size: calc(87.5% + 0.5vw);
 
-  background-color: #f9a825;
+  background-color: #81C784
 }
 
 .farm-info {
@@ -212,11 +196,19 @@ ul {
   background-color: white;
 }
 
-.farm-flavor-text {
+.farm-stats-container {
+  display: flex;
+  flex-direction: column;
+  flex: 2;
+  align-content: center;
+  justify-content: center;
+}
+
+.farm-flavor-text-container {
   margin: auto;
   margin-bottom: 0;
-  width: 100%;  
   display: flex;
+  width: 100%;  
   flex-flow: column;
   justify-content: flex-end;
   text-align: left;
@@ -225,18 +217,27 @@ ul {
 
 .farmer-quote {
   margin: 25px 25px 0 25px;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: calc(75.5% + 0.2vw);
+  font-weight: 500;
   font-style: italic;
 }
 
 .farmer-quote-name {
   margin-right: 15px;
 
+  font-family: 'Times New Roman', Times, serif;
+  font-size: calc(65.5% + 0.5vw);
   font-style: normal;
+  font-weight: 700;
   text-align: right;
 }
 
-
-
+@media (max-width: 600px) {
+  .app-container {
+    flex-flow: column wrap;
+  }
+}
 
 
 

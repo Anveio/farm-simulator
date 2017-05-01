@@ -15,8 +15,12 @@ export default class FarmInfo {
     return repo.newFarmName();
   }
 
+  private generateRandomBaseRevenue =() => {
+    return parseFloat((Math.random() * 10).toFixed(2));
+  }
+
   readonly farmer: Farmer = this.generateRandomFarmer();
   readonly farmName: string = this.generateRandomFarmName();
-  readonly baseRevenue: number = 1;
+  readonly baseRevenue: number = this.generateRandomBaseRevenue();
   readonly upgrades: Upgrade[];
 }
