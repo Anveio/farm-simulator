@@ -11,6 +11,7 @@ export default class App extends React.Component<never, never> {
       <div>
         <nav className="navbar"> Farming Simulator </nav>
         <Game />
+        <Game />
       </div>
     )  
   }
@@ -19,7 +20,7 @@ export default class App extends React.Component<never, never> {
 
 interface GameState { money: number; selectedFarmInfo: FarmInfo | null }
 class Game extends React.Component<never, GameState> {
-  constructor(props: never){
+  constructor(props: never) {
     super(props)
     this.state = {
       money: 100,
@@ -83,7 +84,7 @@ interface FarmGridProps {
 }
 
 class FarmGrid extends React.Component<FarmGridProps, { farms: number } > {
-  constructor(props: FarmGridProps){
+  constructor(props: FarmGridProps) {
     super(props)
     this.state = {
       farms: 25

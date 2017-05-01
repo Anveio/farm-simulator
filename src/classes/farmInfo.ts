@@ -1,5 +1,6 @@
 import Farmer from "./farmer";
 import NameRepo from "./nameRepo";
+import Upgrade from "./upgrade";
 
 const repo = new NameRepo;
 
@@ -17,4 +18,5 @@ export default class FarmInfo {
   readonly farmer: Farmer = this.generateRandomFarmer();
   readonly farmName: string = this.generateRandomFarmName();
   readonly baseRevenue: number = 1;
+  readonly upgrades: Upgrade[];
 }

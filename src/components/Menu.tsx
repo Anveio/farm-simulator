@@ -15,6 +15,7 @@ export default class Menu extends React.Component<MenuProps, never> {
             <p>Owner: {this.props.selectedFarmInfo.farmer.name}</p>
             <p>"{this.props.selectedFarmInfo.farmer.quote}" </p>
             <p>Farm Efficiency: {this.props.selectedFarmInfo.farmer.efficiency}</p>
+            <p>Farm Revenue: {this.props.selectedFarmInfo.baseRevenue}</p>
           </div>
         </div>  
       )

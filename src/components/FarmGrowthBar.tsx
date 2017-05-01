@@ -3,7 +3,7 @@ import * as React from "react";
 interface FarmGrowthBarProps { 
   gpID: string; 
   growthRate: number;
-  growthMultiplier: number;
+  efficiency: number;
   onGrowthFinish(): void
   onMouseDown(): void;
 }
@@ -27,17 +27,16 @@ export default class FarmGrowthBar extends React.Component<FarmGrowthBarProps, {
   }
 
   componentWillReceiveProps(nextProps: FarmGrowthBarProps) {
-    process.nextTick(() => {
-      clearInterval(this.ticker)
-      this.growthRate = nextProps.growthRate;
-      this.ticker = setInterval(() =>
-        this.tick(nextProps.growthMultiplier), 
-        this.tickRate
-      )
-    })
+    // process.nextTick(() => {
+    clearInterval(this.ticker)
+    this.growthRate = nextProps.growthRate;
+    this.ticker = setInterval(() =>
+      this.tick(nextProps.efficiency), 
+      this.tickRate
+    )
   }
 
-  tick = (growthMultiplier:number = this.props.growthMultiplier):void => {
+  tick = (efficiency:number = this.props.efficiency):void => {
     if (this.state.progress >= 100) {
       this.props.onGrowthFinish();
 
@@ -48,7 +47,7 @@ export default class FarmGrowthBar extends React.Component<FarmGrowthBarProps, {
 
     this.setState(prevState => {
       return { 
-        progress: prevState.progress + (0.1 * growthMultiplier * this.growthRate),
+        progress: prevState.progress + (0.1 * efficiency * this.growthRate),
       }
     })
   }
