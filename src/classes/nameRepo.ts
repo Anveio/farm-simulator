@@ -5,7 +5,8 @@ Array.prototype.sample = function() {
 export default class NameRepo {
   private maleFirstNames: string[] = maleFirstNamesArray
   private farmerQuotes: string[] = farmerQuotesArray;
-  private farmNames: string[] = farmNamesArray;
+  private farmPrefixes: string[] = farmNamesPrefixArray;
+  private farmSuffixes: string[] = farmNamesSuffixArray;
   private lastNames: string[] = lastNamesArray;
 
   public newFarmerName = () => {
@@ -21,7 +22,7 @@ export default class NameRepo {
   }
 
   public newFarmName = () => {
-    return this.farmNames.sample();
+    return this.farmPrefixes.sample() + " " + this.farmSuffixes.sample();
   }
 }
 
@@ -32,8 +33,12 @@ const lastNamesArray: string[] = ["Shultz", "Cuevas", "Rhodes", "Mckenzie", "Tay
 
 
 
-const farmNamesArray: string[] = [
-  "Tequiero Ranchero", "The Frozen Ranch", "Oakey Dokey Nursery", "Sunset Estate", "Windy Willows", "Breezy Hills Acres", "Wild Horse Farmstead", "Rolling Moss Pastures", "Red River Acres", "Moonlight Pastures", "Rolling Moss Ranch", "Rock Bottom Nursery", "Swan Lake Gardens","Day Break Estate","Mossy Rock Fields", "Morning Star Fields", "Rainbow Hill Estate", "Burning Sands Meadow", "Blazing Pitchfork Acres", "Chariot Range", "Lucky Star Grange","Ravenwood Ranch"
+const farmNamesPrefixArray: string[] = [
+  "The Frozen", "Oakey Dokey", "Sunset", "Windy Willows", "Breezy Hills", "Wild Horse", "Rolling Moss", "Red River", "Moonlight", "Rolling Moss", "Rock Bottom", "Swan Lake","Day Break","Mossy Rock", "Morning Star", "Rainbow Hill", "Burning Sands", "Blazing Pitchfork", "Chariot", "Lucky Star","Ravenwood", "Tree Hollow", "River Neck", "Evergreen", "Two Pines", "Mountainridge", "Little Foot", "Rolling Hills", "Blueberry", "Lone Oak", "Prairie Hills", "Strawberry Mountain", "Waterfall", "Mountain View", "Strawberry Valley", "Roadrunner", "Spring Fountain", "Crescent Vanyon", "Pinewood", "Yew Valley", "Freedom", "Cranberry", "Rosewood", "Mistwood", "Blackwater", "Mooseridge", "Sleeping Hills", "Riverrock", "Wildflower", "Mystic Hill"
+]
+
+const farmNamesSuffixArray: string[] = [
+  "Ranch", "Estate", "Acres", "Gardens", "Fields", "Meadow", "Grange", "Nursey", "Range", "Pastures", "Orchard", "Farmstead", "Vineyard", "Farm", "Homestead", "Plantation"
 ]
 
 const farmerQuotesArray: string[] = [

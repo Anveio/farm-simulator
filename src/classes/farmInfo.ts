@@ -16,7 +16,7 @@ export default class FarmInfo {
   }
 
   private generateRandomBaseRevenue =() => {
-    return parseFloat((Math.random() * 10).toFixed(2));
+    return parseFloat(( (Math.random() + 1) * 10).toFixed(2));
   }
 
   readonly farmer: Farmer = this.generateRandomFarmer();
