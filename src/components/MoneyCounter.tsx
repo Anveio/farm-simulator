@@ -1,6 +1,5 @@
 import * as React from "react";
 
-
 interface MoneyCounterProps { money: number }
 export const MoneyCounter = (props: MoneyCounterProps) => {
   return (

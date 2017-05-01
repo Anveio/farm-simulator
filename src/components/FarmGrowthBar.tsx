@@ -4,12 +4,12 @@ interface FarmGrowthBarProps {
   gpID: string; 
   growthRate: number;
   growthMultiplier: number;
-  onGrowthFinish: any
-  onMouseDown: any;
+  onGrowthFinish(): void
+  onMouseDown(): void;
 }
 
 export default class FarmGrowthBar extends React.Component<FarmGrowthBarProps, { progress: number }> {
-  constructor(props: any){
+  constructor(props: FarmGrowthBarProps){
     super(props)
     this.state = {
       progress: 0,
@@ -37,7 +37,7 @@ export default class FarmGrowthBar extends React.Component<FarmGrowthBarProps, {
     })
   }
 
-  tick(growthMultiplier:number = this.props.growthMultiplier):void {
+  tick = (growthMultiplier:number = this.props.growthMultiplier):void => {
     if (this.state.progress >= 100) {
       this.props.onGrowthFinish();
 
@@ -54,7 +54,7 @@ export default class FarmGrowthBar extends React.Component<FarmGrowthBarProps, {
   }
 
   // Clicking on the progress bar doesn't trigger Farm selection without this.
-  // Wierd idiosyncracy, maybe can be avoided by structuring the HTMl differently?
+  // CSS Handles this through `pointer-events: none` but just in case that isn't there
   handleMouseDown = ():void => {
     this.props.onMouseDown();
   }

@@ -6,14 +6,16 @@ import FarmInfo from "../classes/farmInfo";
 interface MenuProps { money: number; selectedFarmInfo: FarmInfo | null}
 export default class Menu extends React.Component<MenuProps, never> {
   farmSelection = () => {
-    if (this.props.selectedFarmInfo !== null) {
+    if (this.props.selectedFarmInfo) {
       return(
         <div className="farm-info">
-          <h3>Farm Info:</h3>    
-          <p>"{this.props.selectedFarmInfo.farmName}"</p>
-          <p>Owner: {this.props.selectedFarmInfo.farmer.name}</p>
-          <p>"{this.props.selectedFarmInfo.farmer.quote}" </p>
-          <p>Farm Efficiency: {this.props.selectedFarmInfo.farmer.efficiency}</p>
+          <h3>Farm Info:</h3>
+          <div className="farm-info-text">
+            <p>"{this.props.selectedFarmInfo.farmName}"</p>
+            <p>Owner: {this.props.selectedFarmInfo.farmer.name}</p>
+            <p>"{this.props.selectedFarmInfo.farmer.quote}" </p>
+            <p>Farm Efficiency: {this.props.selectedFarmInfo.farmer.efficiency}</p>
+          </div>
         </div>  
       )
     } else {
@@ -25,8 +27,8 @@ export default class Menu extends React.Component<MenuProps, never> {
     return (
       <div className="menu-column">
         <div className="menu">
-          <div id="menu-title"><h2> Menu </h2> </div>
           <MoneyCounter money={this.props.money} />
+          <div id="menu-title"><h2> Menu </h2> </div>
           {this.farmSelection()}
         </div>
       </div>

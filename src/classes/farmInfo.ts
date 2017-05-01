@@ -16,4 +16,5 @@ export default class FarmInfo {
 
   readonly farmer: Farmer = this.generateRandomFarmer();
   readonly farmName: string = this.generateRandomFarmName();
+  readonly baseRevenue: number = 1;
 }

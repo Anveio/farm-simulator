@@ -9,6 +9,7 @@ export default class App extends React.Component<never, never> {
   render() {
     return (
       <div>
+        <nav className="navbar"> Farming Simulator </nav>
         <Game />
       </div>
     )  
@@ -56,7 +57,9 @@ class Game extends React.Component<never, GameState> {
       <div className="app-container">
         <div className="game-column">
           <div className="game-container">
-            <h1> Farm Simulator </h1>
+            <div id="game-title-container">
+              <h1 id="game-title"> Farm Simulator </h1>
+            </div>
             <div className="farm-grid">
               <FarmGrid 
                 onFarmReadyForHarvest={this.handleIncomingRevenue} 
@@ -73,7 +76,12 @@ class Game extends React.Component<never, GameState> {
   }
 }
 
-interface FarmGridProps { onFarmReadyForHarvest: any; onFarmPurchase: any; onFarmSelection: any; }
+interface FarmGridProps { 
+  onFarmReadyForHarvest(): void; 
+  onFarmPurchase(): boolean; 
+  onFarmSelection(farmInfo: FarmInfo): void; 
+}
+
 class FarmGrid extends React.Component<FarmGridProps, { farms: number } > {
   constructor(props: FarmGridProps){
     super(props)

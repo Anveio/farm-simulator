@@ -9,24 +9,26 @@ class MouseData {
   constructor(readonly hovering: boolean, readonly  mouseDown: boolean) {} 
 }
 
-interface FarmProps { farmID: string; onFarmGrowthBarFinish: any; onSelection: any; }
+interface FarmProps { farmID: string; onFarmGrowthBarFinish(): void; onSelection(farmInfo: FarmInfo): void; }
 export default class Farm extends React.Component<FarmProps, MouseData> {
-  constructor(props: any){
+  constructor(props: FarmProps){
     super(props)
     this.state = {
       hovering: false,
       mouseDown: false
     }
+
+    // const farmInfo: FarmInfo = this.newFarmInfo();
   }
 
-  farmInfo: FarmInfo;
+  farmInfo: FarmInfo
 
   componentWillMount() {
-    this.setFarmInfo();
+    this.farmInfo = this.newFarmInfo();
   }
 
-  setFarmInfo = () => {
-    this.farmInfo = new FarmInfo(this.props.farmID)
+  newFarmInfo = (): FarmInfo => {
+    return new FarmInfo(this.props.farmID)
   }
 
   sendGrowthFinishUpstream = (): void => {
@@ -82,12 +84,12 @@ export default class Farm extends React.Component<FarmProps, MouseData> {
   render() {
     return (
       <div 
-        className="farm" 
+        className="farm"   
         id={"farm-" + this.props.farmID}
         onMouseDown={this.handleMouseDown}
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
-        onMouseUp={this.handleMouseUp}>
+        onMouseUp={this.handleMouseUp} >
         <FarmGrowthBar 
           key={this.props.farmID}
           gpID={this.props.farmID}
