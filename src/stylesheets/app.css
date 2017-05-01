@@ -128,6 +128,7 @@ ul {
 
 .add-farm-btn {
   justify-content: center;
+  word-wrap: break-word;
 
   background-color: #eceff1;
   border: 4px dashed #90caf9;

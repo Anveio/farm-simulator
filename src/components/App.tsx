@@ -9,7 +9,7 @@ export default class App extends React.Component<never, never> {
   render() {
     return (
       <div>
-        <nav className="navbar"> Farming Simulator </nav>
+        <nav className="navbar"> Farm Simulator </nav>
         <Game />
 
       </div>
@@ -23,7 +23,7 @@ class Game extends React.Component<never, GameState> {
   constructor(props: never) {
     super(props)
     this.state = {
-      money: 100,
+      money: 10000000000,
       selectedFarmInfo: null
     }
   }
@@ -34,14 +34,14 @@ class Game extends React.Component<never, GameState> {
     })
   }
 
-  handleFarmPurchase = (): boolean => {
+  handleFarmPurchase = (farmCost: number): boolean => {
     const completeFarmPurchase = (): void => {
       this.setState(prevState => {
-        return { money: prevState.money - 100 }
+        return { money: prevState.money - farmCost }
       })
     }
 
-    if (this.state.money >= 100) {
+    if (this.state.money >= farmCost) {
       completeFarmPurchase();
       return true;
     } else {
@@ -79,7 +79,7 @@ class Game extends React.Component<never, GameState> {
 
 interface FarmGridProps { 
   onFarmGrowthFinish(revenue: number): void; 
-  onFarmPurchase(): boolean; 
+  onFarmPurchase(currentFarmCount: number): boolean; 
   onFarmSelection(farmInfo: FarmInfo): void; 
 }
 
@@ -87,7 +87,7 @@ class FarmGrid extends React.Component<FarmGridProps, { farms: number } > {
   constructor(props: FarmGridProps) {
     super(props)
     this.state = {
-      farms: 25
+      farms: 35
     }
   }
 
@@ -113,14 +113,22 @@ class FarmGrid extends React.Component<FarmGridProps, { farms: number } > {
         </li>
       )
     }
-
     return createdFarms
   }
+
+  calculateFarmCost = (): number => {
+    const baseCost: number = 720;
+    const coEf: number = 1.550;
+
+    return (baseCost * (Math.pow(coEf, this.state.farms)));
+  }
+
+  
 
   addFarmToFarmGrid = (e: React.MouseEvent<HTMLButtonElement>): void => {
     e.preventDefault(); // Maybe not necessary
 
-    if (this.props.onFarmPurchase() === true) {
+    if (this.props.onFarmPurchase(this.calculateFarmCost()) === true) {
       this.setState(prevState => {
         return { farms: prevState.farms += 1 }
       })
@@ -128,6 +136,11 @@ class FarmGrid extends React.Component<FarmGridProps, { farms: number } > {
   }
 
   render() {
+    const formattedFarmCost = () => {
+      let short = this.calculateFarmCost().toPrecision(3)
+      return parseFloat(short).toExponential();
+    }
+
     return (
       <ul className="farm-ul">
         {this.buildFarmGrid(this.state.farms)}
@@ -135,7 +148,7 @@ class FarmGrid extends React.Component<FarmGridProps, { farms: number } > {
           <button 
             className="farm add-farm-btn" 
             onClick={this.addFarmToFarmGrid}>
-            +</button> </li>
+            {formattedFarmCost()}</button> </li>
       </ul>
     )
   }
