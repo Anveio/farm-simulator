@@ -11,7 +11,6 @@ export default class App extends React.Component<never, never> {
       <div>
         <nav className="navbar"> Farming Simulator </nav>
         <Game />
-        <Game />
       </div>
     )  
   }
