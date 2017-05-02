@@ -42,7 +42,7 @@ class Game extends React.Component<never, GameState> {
     }
   }
 
-  completeFarmPurchase = (farmCost: number): void => {
+  deductFarmCost = (farmCost: number): void => {
     this.setState(prevState => {
       return { money: prevState.money - farmCost }
     })
@@ -64,7 +64,7 @@ class Game extends React.Component<never, GameState> {
               <FarmGrid 
                 onFarmGrowthFinish={this.handleIncomingRevenue} 
                 onFarmPurchase={this.handleFarmPurchaseAttempt}
-                onFarmPurchaseCompletion={this.completeFarmPurchase}
+                onFarmPurchaseVerification={this.deductFarmCost}
                 onFarmSelection={this.handleFarmSelection} />
             </div>
           </div>
@@ -80,7 +80,7 @@ class Game extends React.Component<never, GameState> {
 interface FarmGridProps { 
   onFarmGrowthFinish(revenue: number): void; 
   onFarmPurchase(farmCost: number): boolean;
-  onFarmPurchaseCompletion(farmCost: number): void;
+  onFarmPurchaseVerification(farmCost: number): void;
   onFarmSelection(farmInfo: FarmInfo): void; 
 }
 
@@ -121,6 +121,7 @@ class FarmGrid extends React.Component<FarmGridProps, { farms: number } > {
     const baseCost: number = 350;
     const coEf: number = 1.65;
 
+    // Cost = 350 * (1.65^currentFarmCount)
     return (baseCost * (Math.pow(coEf, this.state.farms)));
   }
 
@@ -129,7 +130,7 @@ class FarmGrid extends React.Component<FarmGridProps, { farms: number } > {
     const farmCost = this.calculateFarmCost()
 
     if (this.props.onFarmPurchase(farmCost) === true && this.state.farms < 25) {
-      this.props.onFarmPurchaseCompletion(farmCost);
+      this.props.onFarmPurchaseVerification(farmCost);
       this.setState(prevState => {
         return { farms: prevState.farms += 1 }
       })
@@ -145,15 +146,18 @@ class FarmGrid extends React.Component<FarmGridProps, { farms: number } > {
       }
 
       const formatSmallNum = (cost: number): string => {
-        console.log("small num detected")
         return parseFloat(cost.toPrecision(3)).toFixed(0);
       }
 
       return (cost > parseFloat('1e6')) ? formatLargeNum(cost) : formatSmallNum(cost);      
     }
 
-    const farmLimitReached = () => {
-      return (this.state.farms < 25)
+    const addFarmButtonEnabled = () => {
+      if (this.state.farms >= 25) {
+        return false;
+      } else {
+        return true;
+      }
     }
 
     return (
@@ -162,10 +166,9 @@ class FarmGrid extends React.Component<FarmGridProps, { farms: number } > {
         <li className="farm-li add-farm-li"> 
           <button 
             className="farm add-farm-btn"
-            disabled={!farmLimitReached()} 
-            onClick={this.addFarmToFarmGrid}
-          >
-            {formattedFarmCost()}
+            disabled={!addFarmButtonEnabled()} 
+            onClick={this.addFarmToFarmGrid} >
+          ${formattedFarmCost()}
           </button> 
         </li>
       </ul>

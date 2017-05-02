@@ -37,7 +37,7 @@ export default class Farm extends React.Component<FarmProps, MouseData> {
   }
 
   sendGrowthFinishUpstream = (): void => {
-    this.props.onFarmGrowthBarFinish(this.farmInfo.baseRevenue);
+    this.props.onFarmGrowthBarFinish(this.farmInfo.getTotalRevenue());
   }
 
   sendFarmSelectionUpstream = (): void => {

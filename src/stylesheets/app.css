@@ -31,7 +31,7 @@ ul {
 
 .app-container {
   display: flex;
-  flex-flow: row wrap;
+  flex-direction: row;
   width: 100%;
 }
 
@@ -58,26 +58,32 @@ ul {
   display: flex;
   width: 75%;
 
-  flex-wrap: wrap;
+  flex-direction: column;
 
   box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
 
 #game-title-container {
   border-top: 25px solid #00600f;
-  background-color: #81C784;
+  font-size: calc(187.5% + 0.5vw);
   width: 100%;
+  height: 3em;
+  
+  display: flex;
+  justify-content: center;
+  background-color: #81C784;
 }
 
 #game-title {
-  font-size: calc(90.5% + 0.5vw);
+  margin: auto;
+  
 }
 
 .farm-grid {
   display: flex;
   width: 100%;
   justify-content: center;
-  min-height: 600px;
+  min-height: 400px;
 
   background-color: #4e342e
 }
@@ -93,17 +99,18 @@ ul {
 }
 
 .farm-li {
+  font-size: calc(28.5% + 1.0vw);
   margin: 0.4em;
+  height: 3em;
+  width: 3em;
 }
 
 .farm {
-  display: flex;
+  flex: 1;
   background-color: #8d6e63;
   border: 2px solid black;
-  flex: 1;
-  font-size: calc(28.5% + 1.0vw);
-  height: 3em;
-  width: 3em;
+  height: 100%;
+  width: 100%;
 }
 
 .farm:hover {
@@ -125,15 +132,19 @@ ul {
 }
 
 .add-farm-btn {
+  padding: 0;
+
+  font-size: calc(28.5% + 1.0vw);
   justify-content: center;
   word-wrap: break-word;
 
   background-color: #eceff1;
-  border: 4px dashed #90caf9;
+  border: 2px dashed #90caf9;
 }
 
+
 .add-farm-btn:hover {
-  border: 4px dashed black;
+  border: 2px dashed black;
   background-color: #8d6e63;
   transition: all 0.2s cubic-bezier(.25, .8, .25,1);
 }
@@ -202,9 +213,10 @@ ul {
 .farm-stats-container {
   display: flex;
   flex-direction: column;
+  padding-left: 2em;
+  text-align: left;
   flex: 2;
-  align-content: center;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .farm-flavor-text-container {

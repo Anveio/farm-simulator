@@ -12,7 +12,7 @@ export const FarmMenuCard = (props: {selectedFarmInfo: FarmInfo}) => {
           Speed: {props.selectedFarmInfo.farmer.efficiency}
         </h2>
         <h2 className="farm-revenue">
-          Base Revenue: ${props.selectedFarmInfo.baseRevenue.toFixed(2)}
+          Profit: ${props.selectedFarmInfo.getTotalRevenue().toFixed(2)}
         </h2>
       </div>
       <div className="farm-flavor-text-container">
