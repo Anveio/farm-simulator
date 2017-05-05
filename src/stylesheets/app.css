@@ -1,7 +1,7 @@
 /* Typography */
 
 html, body, #root, .app-container {
-  font-family: Arial;
+  font-family: "Calibri", Arial, sans-serif;
   margin: 0;
   padding: 0;
 }
@@ -80,16 +80,14 @@ ul {
 }
 
 .farm-grid {
-  display: flex;
   width: 100%;
-  justify-content: center;
   min-height: 400px;
-
   background-color: #4e342e
 }
 
 .farm-ul {
-  margin: 1em 0 1em 0;
+  padding: 1em 0 1em 0;
+  margin: auto;
   display: flex;
   font-size: calc(28.5% + 1.0vw);
   flex-flow: row wrap;
@@ -140,6 +138,7 @@ ul {
 
   background-color: #eceff1;
   border: 2px dashed #90caf9;
+
 }
 
 

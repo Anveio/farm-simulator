@@ -1,19 +1,16 @@
 import * as React from "react";
-import { MoneyCounter } from "./MoneyCounter";
-import FarmInfo from "../classes/farmInfo";
-import { FarmMenuCard } from "./FarmMenuCard";
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
+import FarmInfo from "../classes/farmInfo";
+import { MoneyCounter } from "./MoneyCounter";
+import { FarmSummaryCard } from "./FarmSummaryCard";
+import { FarmLevelCard } from "./FarmLevelCard";
 
 interface MenuProps { money: number; selectedFarmInfo: FarmInfo | null}
-export default class Menu extends React.Component<MenuProps, never> {
-  farmSelection = () => {
-    if (this.props.selectedFarmInfo) {
-      return(
-        <FarmMenuCard selectedFarmInfo={this.props.selectedFarmInfo} />
-      )
-    } else {
-      return ( <div className="farm-info"><h3>No Tile Selected</h3></div> )
-    }
+interface MenuState { currentSelection: FarmInfo | null }
+export default class Menu extends React.Component<MenuProps, MenuState> {
+  constructor(props: MenuProps) {
+    super(props);
   }
 
   render() {
@@ -21,8 +18,20 @@ export default class Menu extends React.Component<MenuProps, never> {
       <div className="menu-column">
         <div className="menu">
           <MoneyCounter money={this.props.money} />
-          {/*<div id="menu-title"><h2> Menu </h2> </div>*/}
-          {this.farmSelection()}
+          <Tabs >
+            <TabList>
+              <Tab>Summary</Tab>
+              <Tab>Level</Tab>
+            </TabList>
+            
+            <TabPanel>
+              <FarmSummaryCard selectedFarmInfo={this.props.selectedFarmInfo} />
+            </TabPanel>
+            
+            <TabPanel>
+              <FarmLevelCard selectedFarmInfo={this.props.selectedFarmInfo} />
+            </TabPanel>
+          </Tabs>  
         </div>
       </div>
     )

@@ -36,10 +36,6 @@ export default class Farm extends React.Component<FarmProps, MouseData> {
     return new FarmInfo(this.props.farmID)
   }
 
-  sendGrowthFinishUpstream = (): void => {
-    this.props.onFarmGrowthBarFinish(this.farmInfo.getTotalRevenue());
-  }
-
   sendFarmSelectionUpstream = (): void => {
     // Fill this method will all the information you want to send about this Farm upstream
     // This information will bubble up to <Game /> and then down to <Menu />
@@ -57,6 +53,13 @@ export default class Farm extends React.Component<FarmProps, MouseData> {
       newFarmGrowthBarRate = 2;
     }
     return newFarmGrowthBarRate;
+  }
+
+  handleGrowthFinish = (): void => {
+    const revenue: number = this.farmInfo.getTotalRevenue();
+
+    this.props.onFarmGrowthBarFinish(revenue);
+    this.farmInfo.farmLevel.addExp(revenue);
   }
 
   handleMouseEnter = (): void => {
@@ -100,7 +103,7 @@ export default class Farm extends React.Component<FarmProps, MouseData> {
           gpID={this.props.farmID}
           growthRate={this.calculateFarmGrowthRate(this.state)}
           efficiency={this.farmInfo.farmer.efficiency}
-          onGrowthFinish={this.sendGrowthFinishUpstream}
+          onGrowthFinish={this.handleGrowthFinish}
           onMouseDown={this.sendFarmSelectionUpstream} />
       </div>
     )

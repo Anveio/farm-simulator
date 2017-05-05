@@ -88,7 +88,7 @@ class FarmGrid extends React.Component<FarmGridProps, { farms: number } > {
   constructor(props: FarmGridProps) {
     super(props)
     this.state = {
-      farms: 0
+      farms: 9
     }
   }
 
@@ -121,7 +121,7 @@ class FarmGrid extends React.Component<FarmGridProps, { farms: number } > {
     const baseCost: number = 350;
     const coEf: number = 1.65;
 
-    // Cost = 350 * (1.65^currentFarmCount)
+    // FORMULA: cost = 350 * (1.65^currentFarmCount)
     return (baseCost * (Math.pow(coEf, this.state.farms)));
   }
 
@@ -152,12 +152,8 @@ class FarmGrid extends React.Component<FarmGridProps, { farms: number } > {
       return (cost > parseFloat('1e6')) ? formatLargeNum(cost) : formatSmallNum(cost);      
     }
 
-    const addFarmButtonEnabled = () => {
-      if (this.state.farms >= 25) {
-        return false;
-      } else {
-        return true;
-      }
+    const farmLimitReached = () => {
+      return this.state.farms >= 25
     }
 
     return (
@@ -166,7 +162,7 @@ class FarmGrid extends React.Component<FarmGridProps, { farms: number } > {
         <li className="farm-li add-farm-li"> 
           <button 
             className="farm add-farm-btn"
-            disabled={!addFarmButtonEnabled()} 
+            disabled={!farmLimitReached()} 
             onClick={this.addFarmToFarmGrid} >
           ${formattedFarmCost()}
           </button> 

@@ -1,11 +1,14 @@
 import Farmer from "./farmer";
 import NameRepo from "./nameRepo";
 import Upgrade from "./upgrade";
+import Level from "./level";
 
 const repo = new NameRepo;
 
 export default class FarmInfo {
-  constructor(readonly farmID: string) {}
+  constructor(readonly farmID: string) {
+
+  }
 
   public getTotalRevenue = () => {
     // Performs the calculation in #calculateTotalRevenue() every time this is called
@@ -13,7 +16,7 @@ export default class FarmInfo {
     return this.calculateTotalRevenue();
   }
 
-  private generateRandomFarmer = () => {
+  private generateFarmer = () => {
     return new Farmer();
   }
 
@@ -26,14 +29,13 @@ export default class FarmInfo {
   }
 
   private calculateTotalRevenue = () => {
-    const levelMulti = Math.pow(1.1, this.level);
-    return this.baseRevenue * levelMulti;
+    const currentLevelMulti = Math.pow(1.1, this.farmLevel.currentLevel);
+    return this.baseRevenue * currentLevelMulti;
   }
   
-
-  readonly farmer: Farmer = this.generateRandomFarmer();
+  readonly farmer: Farmer = this.generateFarmer();
   readonly farmName: string = this.generateRandomFarmName();
+  readonly farmLevel: Level = new Level(0);
   readonly baseRevenue: number = this.generateRandomBaseRevenue();
-  readonly level: number = 0;
   readonly upgrades: Upgrade[];
 }
