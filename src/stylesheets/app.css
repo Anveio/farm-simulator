@@ -207,12 +207,13 @@ ul {
   align-content: center;
 
   background-color: white;
+  /*color: #333333;*/
 }
 
 .farm-stats-container {
   display: flex;
   flex-direction: column;
-  padding-left: 2em;
+  padding-left: calc(0.5em + 1vw);
   text-align: left;
   flex: 2;
   justify-content: flex-start;
@@ -247,9 +248,22 @@ ul {
   text-align: right;
 }
 
+.level-exp-info {
+  font-size: calc(55% + 0.2vw);
+}
+
 @media (max-width: 600px) {
   .app-container {
     flex-flow: column wrap;
+  }
+  .farm-grid {
+    min-height: 0;
+  }
+  .money-display {
+    border-top: 0;
+  }
+  #game-title-container {
+    display: none;
   }
 }
 

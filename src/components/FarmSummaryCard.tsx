@@ -4,6 +4,7 @@ import FarmInfo from "../classes/farmInfo";
 const FarmSummaryDisplay = (props: {selectedFarmInfo: FarmInfo}) => {
 
   const farmInfo: FarmInfo = props.selectedFarmInfo;
+  const farmLevel = farmInfo.farmLevel
 
   return (
     <div className="farm-info">
@@ -11,6 +12,13 @@ const FarmSummaryDisplay = (props: {selectedFarmInfo: FarmInfo}) => {
         <h3>"{farmInfo.farmName}"</h3>
       </div>
       <div className="farm-stats-container">
+        <h2> 
+          Level: {farmLevel.currentLevel}
+          <span className="level-exp-info">
+            ({farmLevel.expCurrent.toFixed(2)} / {farmLevel.expReq.toFixed(2)})
+          </span>
+        </h2>
+
         <h2 className="farm-efficiency">
           Speed: {farmInfo.farmer.efficiency}
         </h2>

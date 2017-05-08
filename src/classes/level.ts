@@ -17,7 +17,7 @@ export default class Level {
     if (this.expCurrent >= this.expReq) {
       this.expCurrent = 0;
       this.currentLevel += 1;
-      this.nextExpReq(this.currentLevel)
+      this.expReq = this.nextExpReq(this.currentLevel)
     }
   }
 
