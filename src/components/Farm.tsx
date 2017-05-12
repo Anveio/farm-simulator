@@ -28,12 +28,12 @@ export default class Farm extends React.Component<FarmProps, MouseData> {
 
   farmInfo: FarmInfo
 
-  componentWillMount() {
-    this.farmInfo = this.newFarmInfo();
-  }
-
   newFarmInfo = (): FarmInfo => {
     return new FarmInfo(this.props.farmID)
+  }
+
+  componentWillMount() {
+    this.farmInfo = this.newFarmInfo();
   }
 
   sendFarmSelectionUpstream = (): void => {
@@ -43,6 +43,8 @@ export default class Farm extends React.Component<FarmProps, MouseData> {
   }
 
   calculateFarmGrowthRate = (mouseData: MouseData): number => {
+    // Rename this to calculateMouseMultiplier?
+    // The real Farm Growth Rate calculation will happen on the Farm Class and take upgrades into account
     let newFarmGrowthBarRate: number = 1;
 
     if (!mouseData.hovering){

@@ -18,16 +18,16 @@ export default class FarmGrowthBar extends React.Component<FarmGrowthBarProps, {
 
   growthRate = this.props.growthRate;
   
+  // Aiming for 60fps. This number should never change
   tickRate: number = 16.67;
 
   ticker: any;
-  componentDidMount():void {
+  componentDidMount(): void {
     this.ticker = setInterval(() => { this.tick(); }
     , this.tickRate)
   }
 
   componentWillReceiveProps(nextProps: FarmGrowthBarProps) {
-    // process.nextTick(() => {
     clearInterval(this.ticker)
     this.growthRate = nextProps.growthRate;
     this.ticker = setInterval(() =>
@@ -36,7 +36,7 @@ export default class FarmGrowthBar extends React.Component<FarmGrowthBarProps, {
     )
   }
 
-  tick = (efficiency:number = this.props.efficiency):void => {
+  tick = (efficiency:number = this.props.efficiency): void => {
     if (this.state.progress >= 100) {
       this.props.onGrowthFinish();
 
@@ -54,7 +54,7 @@ export default class FarmGrowthBar extends React.Component<FarmGrowthBarProps, {
 
   // Clicking on the progress bar doesn't trigger Farm selection without this.
   // CSS Handles this through `pointer-events: none` but just in case that isn't there
-  handleMouseDown = ():void => {
+  handleMouseDown = (): void => {
     this.props.onMouseDown();
   }
 
