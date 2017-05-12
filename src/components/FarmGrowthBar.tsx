@@ -18,13 +18,14 @@ export default class FarmGrowthBar extends React.Component<FarmGrowthBarProps, {
 
   growthRate = this.props.growthRate;
   
-  // Aiming for 60fps. This number should never change
-  tickRate: number = 16.67;
+  // Aiming for 60fps.
+  readonly tickRate: number = 16.67;
 
   ticker: any;
   componentDidMount(): void {
-    this.ticker = setInterval(() => { this.tick(); }
-    , this.tickRate)
+    this.ticker = setInterval(() => { 
+      this.tick(); }, 
+      this.tickRate)
   }
 
   componentWillReceiveProps(nextProps: FarmGrowthBarProps) {
@@ -41,13 +42,13 @@ export default class FarmGrowthBar extends React.Component<FarmGrowthBarProps, {
       this.props.onGrowthFinish();
 
       this.setState({
-        progress: 0,
+        progress: 0
       })
     }
 
     this.setState(prevState => {
       return { 
-        progress: prevState.progress + (0.1 * efficiency * this.growthRate),
+        progress: prevState.progress + (0.1 * efficiency * this.growthRate)
       }
     })
   }
@@ -59,14 +60,10 @@ export default class FarmGrowthBar extends React.Component<FarmGrowthBarProps, {
   }
 
   calculateSizeOfFarmProgressBar = () => {
-    let width
-    
-    if(this.state.progress >= 100) {
-      width = '100%';
-    } else {
-      width = `${this.state.progress}%`
-    }
-
+    let width = this.state.progress >= 100 
+      ? '100%' 
+      : `${this.state.progress}%`
+      
     return {
       width: width,
       height: '100%' 
