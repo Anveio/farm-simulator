@@ -87,7 +87,7 @@ export default class FarmGrid extends React.Component<FarmGridProps, { farms: nu
         <li className="farm-li add-farm-li"> 
           <button 
             className="farm add-farm-btn"
-            disabled={!farmLimitReached()} 
+            disabled={farmLimitReached()} 
             onClick={this.addFarmToFarmGrid} >
           ${formattedFarmCost()}
           </button> 
