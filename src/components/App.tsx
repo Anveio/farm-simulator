@@ -23,7 +23,7 @@ class Game extends React.Component<never, GameState> {
   constructor(props: never) {
     super(props)
     this.state = {
-      money: 350,
+      money: 99999999,
       selectedFarmInfo: null
     }
   }
@@ -35,11 +35,7 @@ class Game extends React.Component<never, GameState> {
   }
 
   handleFarmPurchaseAttempt = (farmCost: number): boolean => {
-    if (this.state.money >= farmCost) {
-      return true;
-    } else {
-      return false;
-    }
+    return (this.state.money >= farmCost)
   }
 
   deductFarmCost = (farmCost: number): void => {
