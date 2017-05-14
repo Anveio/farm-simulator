@@ -41,8 +41,10 @@ export default class FarmGrowthBar extends React.Component<FarmGrowthBarProps, {
     if (this.state.progress >= 100) {
       this.props.onGrowthFinish();
 
-      this.setState({
-        progress: 0
+      this.setState(prevState => {
+        return { 
+          progress: prevState.progress - 100 
+        }
       })
     }
 
@@ -59,7 +61,7 @@ export default class FarmGrowthBar extends React.Component<FarmGrowthBarProps, {
     this.props.onMouseDown();
   }
 
-  calculateSizeOfFarmProgressBar = () => {
+  calculateWidth = () => {
     const width = this.state.progress >= 100 
       ? '100%'
       : `${this.state.progress}%`
@@ -75,7 +77,7 @@ export default class FarmGrowthBar extends React.Component<FarmGrowthBarProps, {
       <span 
         id={'gp-' + this.props.gpID} 
         className="farm-growth-progress" 
-        style={this.calculateSizeOfFarmProgressBar()}
+        style={this.calculateWidth()}
         onMouseDown={this.handleMouseDown} > 
       </span>
     )
