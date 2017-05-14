@@ -15,7 +15,7 @@ interface FarmProps {
   onSelection(farmInfo: FarmInfo): void; 
 }
 
-export default class Farm extends React.Component<FarmProps, MouseData> {
+export default class Farm extends React.PureComponent<FarmProps, MouseData> {
   constructor(props: FarmProps){
     super(props)
     this.state = {
@@ -26,10 +26,10 @@ export default class Farm extends React.Component<FarmProps, MouseData> {
     // const farmInfo: FarmInfo = this.newFarmInfo();
   }
 
-  farmInfo: FarmInfo
+  private farmInfo: FarmInfo
 
   newFarmInfo = (): FarmInfo => {
-    return new FarmInfo(this.props.farmID)
+    return new FarmInfo(this.props.farmID);
   }
 
   componentWillMount() {
