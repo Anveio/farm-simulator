@@ -6,9 +6,7 @@ import Level from "./level";
 const repo = new NameRepo;
 
 export default class FarmInfo {
-  constructor(readonly farmID: string) {
-
-  }
+  constructor(readonly farmID: string) {}
 
   public getTotalRevenue = () => {
     // Performs the calculation in #calculateTotalRevenue() every time this is called

@@ -3,7 +3,6 @@ import FarmInfo from "../classes/farmInfo"
 import Level from "../classes/level";
 
 const FarmLevelDisplay = (props: { selectedFarmInfo: FarmInfo }) => {
-  
   const farmLevel: Level = props.selectedFarmInfo.farmLevel;
 
   return (

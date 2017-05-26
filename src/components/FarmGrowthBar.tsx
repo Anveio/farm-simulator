@@ -1,6 +1,6 @@
 import * as React from "react";
 
-interface FarmGrowthBarProps { 
+interface Props { 
   gpID: string; 
   growthRate: number;
   efficiency: number;
@@ -8,8 +8,12 @@ interface FarmGrowthBarProps {
   onMouseDown(): void;
 }
 
-export default class FarmGrowthBar extends React.Component<FarmGrowthBarProps, { progress: number }> {
-  constructor(props: FarmGrowthBarProps){
+interface State {
+  progress: number;
+}
+
+export default class  extends React.Component<Props, State> {
+  constructor(props: Props){
     super(props)
     this.state = {
       progress: 0,
@@ -20,15 +24,15 @@ export default class FarmGrowthBar extends React.Component<FarmGrowthBarProps, {
   
   // Aiming for 60fps.
   readonly tickRate: number = 16.67;
-
   private ticker: any;
+
   componentDidMount(): void {
     this.ticker = setInterval(() => { 
       this.tick(); }, 
       this.tickRate)
   }
 
-  componentWillReceiveProps(nextProps: FarmGrowthBarProps) {
+  componentWillReceiveProps(nextProps: Props) {
     clearInterval(this.ticker)
     this.growthRate = nextProps.growthRate;
     this.ticker = setInterval(() =>
@@ -76,7 +80,7 @@ export default class FarmGrowthBar extends React.Component<FarmGrowthBarProps, {
     return (
       <span 
         id={'gp-' + this.props.gpID} 
-        className="farm-growth-progress" 
+        className="farm-growth-bar" 
         style={this.calculateWidth()}
         onMouseDown={this.handleMouseDown} > 
       </span>

@@ -9,7 +9,7 @@ interface FarmGridProps {
   onFarmSelection(farmInfo: FarmInfo): void; 
 }
 
-export default class FarmGrid extends React.Component<FarmGridProps, { farms: number } > {
+export default class FarmGrid extends React.PureComponent<FarmGridProps, { farms: number } > {
   constructor(props: FarmGridProps) {
     super(props)
     this.state = {

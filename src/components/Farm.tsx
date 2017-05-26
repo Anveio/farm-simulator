@@ -22,8 +22,6 @@ export default class Farm extends React.PureComponent<FarmProps, MouseData> {
       hovering: false,
       mouseDown: false
     }
-
-    // const farmInfo: FarmInfo = this.newFarmInfo();
   }
 
   private farmInfo: FarmInfo

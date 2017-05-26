@@ -23,7 +23,7 @@ class Game extends React.Component<never, GameState> {
   constructor(props: never) {
     super(props)
     this.state = {
-      money: 99999999,
+      money: 350,
       selectedFarmInfo: null
     }
   }
