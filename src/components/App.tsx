@@ -1,9 +1,10 @@
-import * as React from "react";
+import * as React from 'react';
 
-import Menu from "./Menu";
-import FarmGrid from "./FarmGrid";
-import FarmInfo from "../classes/farmInfo";
+import Menu from './Menu';
+import FarmGrid from './FarmGrid';
+import FarmInfo from '../classes/farmInfo';
 
+import '../styles/App.css';
 
 export default class App extends React.Component<never, never> {
   render() {
@@ -13,39 +14,38 @@ export default class App extends React.Component<never, never> {
         <Game />
 
       </div>
-    )  
+    );  
   }
 }
 
-
-interface GameState { money: number; selectedFarmInfo: FarmInfo | null }
+interface GameState { money: number; selectedFarmInfo: FarmInfo | null; }
 class Game extends React.Component<never, GameState> {
   constructor(props: never) {
-    super(props)
+    super(props);
     this.state = {
       money: 350,
       selectedFarmInfo: null
-    }
+    };
   }
 
   handleIncomingRevenue = (revenue: number): void => {
     this.setState(prevState => {
-      return { money: prevState.money + revenue }
-    })
+      return { money: prevState.money + revenue };
+    });
   }
 
   handleFarmPurchaseAttempt = (farmCost: number): boolean => {
-    return (this.state.money >= farmCost)
+    return (this.state.money >= farmCost);
   }
 
   deductFarmCost = (farmCost: number): void => {
     this.setState(prevState => {
-      return { money: prevState.money - farmCost }
-    })
+      return { money: prevState.money - farmCost };
+    });
   }
 
   handleFarmSelection = (farmInfo: FarmInfo): void => {
-    this.setState({ selectedFarmInfo: farmInfo })
+    this.setState({ selectedFarmInfo: farmInfo });
   }
 
   render() {
@@ -61,14 +61,16 @@ class Game extends React.Component<never, GameState> {
                 onFarmGrowthFinish={this.handleIncomingRevenue} 
                 onFarmPurchase={this.handleFarmPurchaseAttempt}
                 onFarmPurchaseVerification={this.deductFarmCost}
-                onFarmSelection={this.handleFarmSelection} />
+                onFarmSelection={this.handleFarmSelection} 
+              />
             </div>
           </div>
         </div>
         <Menu 
           money={this.state.money}
-          selectedFarmInfo={this.state.selectedFarmInfo} />
+          selectedFarmInfo={this.state.selectedFarmInfo} 
+        />
       </div>
-    )
+    );
   }
 }

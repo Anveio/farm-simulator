@@ -1,10 +1,10 @@
-import * as React from "react";
-import FarmInfo from "../classes/farmInfo";
+import * as React from 'react';
+import FarmInfo from '../classes/farmInfo';
 
 const FarmSummaryDisplay = (props: {selectedFarmInfo: FarmInfo}) => {
 
   const farmInfo: FarmInfo = props.selectedFarmInfo;
-  const farmLevel = farmInfo.farmLevel
+  const farmLevel = farmInfo.farmLevel;
 
   return (
     <div className="farm-info">
@@ -31,19 +31,19 @@ const FarmSummaryDisplay = (props: {selectedFarmInfo: FarmInfo}) => {
           "{farmInfo.farmer.quote}" 
         </p> 
         <p className="farmer-quote-name">  
-          {" - " + farmInfo.farmer.name}, Farm Owner    
+          {' - ' + farmInfo.farmer.name}, Farm Owner    
         </p>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export const FarmSummaryCard = (props: { selectedFarmInfo: FarmInfo | null }) => {
   if (props.selectedFarmInfo) {
     return (
       <FarmSummaryDisplay selectedFarmInfo={props.selectedFarmInfo} />
-    )
+    );
   } else {
-    return ( <div className="farm-info"><h3>No Tile Selected</h3></div> )
+    return ( <div className="farm-info"><h3>No Tile Selected</h3></div> );
   }
-}
+};

@@ -1,10 +1,10 @@
-import * as React from "react";
+import * as React from 'react';
 
 interface Props { 
-  gpID: string; 
+  growthBarID: string; 
   growthRate: number;
   efficiency: number;
-  onGrowthFinish(): void
+  onGrowthFinish(): void;
   onMouseDown(): void;
 }
 
@@ -13,50 +13,46 @@ interface State {
 }
 
 export default class  extends React.Component<Props, State> {
-  constructor(props: Props){
-    super(props)
+  private growthRate = this.props.growthRate;
+  private tickRate: number = 16.67; // Aiming for 60fps.
+  private ticker: number;
+
+  constructor(props: Props) {
+    super(props);
     this.state = {
       progress: 0,
-    }
+    };
   }
 
-  private growthRate = this.props.growthRate;
-  
-  // Aiming for 60fps.
-  readonly tickRate: number = 16.67;
-  private ticker: any;
-
   componentDidMount(): void {
-    this.ticker = setInterval(() => { 
-      this.tick(); }, 
-      this.tickRate)
+    this.ticker = window.setInterval(() => { this.tick(); }, this.tickRate);
   }
 
   componentWillReceiveProps(nextProps: Props) {
-    clearInterval(this.ticker)
+    clearInterval(this.ticker);
     this.growthRate = nextProps.growthRate;
-    this.ticker = setInterval(() =>
+    this.ticker = window.setInterval(() =>
       this.tick(nextProps.efficiency), 
-      this.tickRate
-    )
+                                     this.tickRate
+    );
   }
 
-  readonly tick = (efficiency:number = this.props.efficiency): void => {
+  readonly tick = (efficiency: number = this.props.efficiency): void => {
     if (this.state.progress >= 100) {
       this.props.onGrowthFinish();
 
       this.setState(prevState => {
         return { 
           progress: prevState.progress - 100 
-        }
-      })
+        };
+      });
     }
 
     this.setState(prevState => {
       return { 
         progress: prevState.progress + (0.1 * efficiency * this.growthRate)
-      }
-    })
+      };
+    });
   }
 
   // Clicking on the progress bar doesn't trigger Farm selection without this.
@@ -68,22 +64,22 @@ export default class  extends React.Component<Props, State> {
   calculateWidth = () => {
     const width = this.state.progress >= 100 
       ? '100%'
-      : `${this.state.progress}%`
+      : `${this.state.progress}%`;
       
     return {
       width: width,
       height: '100%' 
-    } 
+    }; 
   }
 
   render() {
     return (
       <span 
-        id={'gp-' + this.props.gpID} 
+        id={'gp-' + this.props.growthBarID} 
         className="farm-growth-bar" 
         style={this.calculateWidth()}
-        onMouseDown={this.handleMouseDown} > 
-      </span>
-    )
+        onMouseDown={this.handleMouseDown} 
+      /> 
+    );
   }
 }

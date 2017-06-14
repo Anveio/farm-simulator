@@ -1,13 +1,13 @@
-import * as React from "react";
+import * as React from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
-import FarmInfo from "../classes/farmInfo";
-import { MoneyCounter } from "./MoneyCounter";
-import { FarmSummaryCard } from "./FarmSummaryCard";
-import { FarmLevelCard } from "./FarmLevelCard";
+import FarmInfo from '../classes/farmInfo';
+import { MoneyCounter } from './MoneyCounter';
+import { FarmSummaryCard } from './FarmSummaryCard';
+import { FarmLevelCard } from './FarmLevelCard';
 
-interface MenuProps { money: number; selectedFarmInfo: FarmInfo | null}
-interface MenuState { currentSelection: FarmInfo | null }
+interface MenuProps { money: number; selectedFarmInfo: FarmInfo | null; }
+interface MenuState { currentSelection: FarmInfo | null; }
 export default class Menu extends React.Component<MenuProps, MenuState> {
   constructor(props: MenuProps) {
     super(props);
@@ -34,6 +34,6 @@ export default class Menu extends React.Component<MenuProps, MenuState> {
           </Tabs>  
         </div>
       </div>
-    )
+    );
   }
 }

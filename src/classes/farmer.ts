@@ -1,21 +1,10 @@
-import NameRepo from "./nameRepo";
+import NameRepo from './nameRepo';
 
 const repo = new NameRepo;
 
-export default class Farmer {
-  private generateRandomName = () => {
-    return repo.newFarmerName()
-  }
-
-  private generateRandomQuote = () => {
-    return repo.newFarmQuote();
-  }
-
-  private generateRandomStatEfficiency = () => {
-    return parseFloat((Math.random() + 1).toFixed(2));
-  }
-
-  readonly name: string = this.generateRandomName();
-  readonly quote: string = this.generateRandomQuote();
-  readonly efficiency: number = this.generateRandomStatEfficiency();
+export interface FarmerInfo { name: string; quote: string; efficiency: number; }
+export default class Farmer implements FarmerInfo {
+  readonly name: string = repo.newFarmerName();
+  readonly quote: string = repo.newFarmQuote();
+  readonly efficiency: number = parseFloat((Math.random() + 1).toFixed(2));
 }

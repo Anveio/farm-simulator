@@ -1,7 +1,7 @@
-import * as React from "react";
-import FarmGrowthBar from "./FarmGrowthBar"
+import * as React from 'react';
+import FarmGrowthBar from './FarmGrowthBar';
 
-import FarmInfo from "../classes/farmInfo";
+import FarmInfo from '../classes/farmInfo';
 
 // import Farmer from "../classes/farmer";
 
@@ -16,15 +16,14 @@ interface FarmProps {
 }
 
 export default class Farm extends React.PureComponent<FarmProps, MouseData> {
-  constructor(props: FarmProps){
-    super(props)
+  private farmInfo: FarmInfo;
+  constructor(props: FarmProps) {
+    super(props);
     this.state = {
       hovering: false,
       mouseDown: false
-    }
+    };
   }
-
-  private farmInfo: FarmInfo
 
   newFarmInfo = (): FarmInfo => {
     return new FarmInfo(this.props.farmID);
@@ -45,9 +44,9 @@ export default class Farm extends React.PureComponent<FarmProps, MouseData> {
     // The real Farm Growth Rate calculation will happen on the Farm Class and take upgrades into account
     let newFarmGrowthBarRate: number = 1;
 
-    if (!mouseData.hovering){
+    if (!mouseData.hovering) {
       newFarmGrowthBarRate = 1;
-    } else if (mouseData.mouseDown){
+    } else if (mouseData.mouseDown) {
       newFarmGrowthBarRate = 4;
     } else if (mouseData.hovering) {
       newFarmGrowthBarRate = 2;
@@ -65,13 +64,13 @@ export default class Farm extends React.PureComponent<FarmProps, MouseData> {
   handleMouseEnter = (): void => {
     this.setState({
       hovering: true
-    })
+    });
   }
 
   handleMouseLeave = (): void => {
     this.setState({
       hovering: false
-    })
+    });
   }
 
   // e: React.MouseEvent<HTMLDivElement>
@@ -80,33 +79,34 @@ export default class Farm extends React.PureComponent<FarmProps, MouseData> {
 
     this.setState({
       mouseDown: true
-    })
+    });
   }
 
-  handleMouseUp = ():void => {
+  handleMouseUp = (): void => {
     this.setState({
       mouseDown: false
-    })
+    });
   }
 
   render() {
     return (
       <div 
         className="farm"   
-        id={"farm-" + this.props.farmID}
+        id={'farm-' + this.props.farmID}
         onMouseDown={this.handleMouseDown}
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
-        onMouseUp={this.handleMouseUp} >
+        onMouseUp={this.handleMouseUp} 
+      >
         <FarmGrowthBar 
           key={this.props.farmID}
-          gpID={this.props.farmID}
+          growthBarID={this.props.farmID}
           growthRate={this.calculateFarmGrowthRate(this.state)}
           efficiency={this.farmInfo.farmer.efficiency}
           onGrowthFinish={this.handleGrowthFinish}
-          onMouseDown={this.sendFarmSelectionUpstream} />
+          onMouseDown={this.sendFarmSelectionUpstream} 
+        />
       </div>
-    )
+    );
   }
 }
-

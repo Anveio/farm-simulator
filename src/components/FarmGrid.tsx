@@ -1,6 +1,6 @@
-import * as React from "react";
-import FarmInfo from "../classes/farmInfo";
-import Farm from "./Farm"
+import * as React from 'react';
+import FarmInfo from '../classes/farmInfo';
+import Farm from './Farm';
 
 interface FarmGridProps { 
   onFarmGrowthFinish(revenue: number): void; 
@@ -11,10 +11,10 @@ interface FarmGridProps {
 
 export default class FarmGrid extends React.PureComponent<FarmGridProps, { farms: number } > {
   constructor(props: FarmGridProps) {
-    super(props)
+    super(props);
     this.state = {
       farms: 9
-    }
+    };
   }
 
   handleFarmGrowthBarFinish = (revenue: number): void => {
@@ -25,21 +25,22 @@ export default class FarmGrid extends React.PureComponent<FarmGridProps, { farms
     this.props.onFarmSelection(farmInfo);
   }
 
-  buildFarmGrid = (farmsToCreate: number):JSX.Element[] => {
+  buildFarmGrid = (farmsToCreate: number): JSX.Element[] => {
     let createdFarms: JSX.Element[] = [];
 
-    for(let i = 0; i < farmsToCreate; i++) {
+    for (let i = 0; i < farmsToCreate; i++) {
       createdFarms.push(
         <li key={i.toString()} className="farm-li">
           <Farm 
             key={i.toString()}
             farmID={(i + 1).toString()}
             onFarmGrowthBarFinish={this.handleFarmGrowthBarFinish}
-            onSelection={this.handleFarmSelection} />
+            onSelection={this.handleFarmSelection} 
+          />
         </li>
-      )
+      );
     }
-    return createdFarms
+    return createdFarms;
   }
 
   calculateFarmCost = (): number => {
@@ -52,34 +53,34 @@ export default class FarmGrid extends React.PureComponent<FarmGridProps, { farms
 
   addFarmToFarmGrid = (e: React.MouseEvent<HTMLButtonElement>): void => {
     e.preventDefault(); // Maybe not necessary
-    const farmCost = this.calculateFarmCost()
+    const farmCost = this.calculateFarmCost();
 
     if (this.props.onFarmPurchase(farmCost) === true && this.state.farms < 25) {
       this.props.onFarmPurchaseVerification(farmCost);
       this.setState(prevState => {
-        return { farms: prevState.farms += 1 }
-      })
+        return { farms: prevState.farms += 1 };
+      });
     }
   }
 
   render() {
     const formattedFarmCost = () => {
       const cost = this.calculateFarmCost();
-      const formatLargeNum = (cost: number): string => {
-        let short = cost.toPrecision(3)
+      const formatLargeNum = (largeNum: number): string => {
+        let short = largeNum.toPrecision(3);
         return parseFloat(short).toExponential();
-      }
+      };
 
-      const formatSmallNum = (cost: number): string => {
-        return parseFloat(cost.toPrecision(3)).toFixed(0);
-      }
+      const formatSmallNum = (smallNum: number): string => {
+        return parseFloat(smallNum.toPrecision(3)).toFixed(0);
+      };
 
       return (cost > parseFloat('1e6')) ? formatLargeNum(cost) : formatSmallNum(cost);      
-    }
+    };
 
     const farmLimitReached = () => {
-      return this.state.farms >= 25
-    }
+      return this.state.farms >= 25;
+    };
 
     return (
       <ul className="farm-ul">
@@ -88,11 +89,12 @@ export default class FarmGrid extends React.PureComponent<FarmGridProps, { farms
           <button 
             className="farm add-farm-btn"
             disabled={farmLimitReached()} 
-            onClick={this.addFarmToFarmGrid} >
+            onClick={this.addFarmToFarmGrid} 
+          >
           ${formattedFarmCost()}
           </button> 
         </li>
       </ul>
-    )
+    );
   }
 }

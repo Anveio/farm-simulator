@@ -1,6 +1,6 @@
-import * as React from "react";
-import FarmInfo from "../classes/farmInfo"
-import Level from "../classes/level";
+import * as React from 'react';
+import FarmInfo from '../classes/farmInfo';
+import Level from '../classes/level';
 
 const FarmLevelDisplay = (props: { selectedFarmInfo: FarmInfo }) => {
   const farmLevel: Level = props.selectedFarmInfo.farmLevel;
@@ -19,15 +19,15 @@ const FarmLevelDisplay = (props: { selectedFarmInfo: FarmInfo }) => {
         </h2>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export const FarmLevelCard = (props: { selectedFarmInfo: FarmInfo | null }) => {
   if (props.selectedFarmInfo) {
     return (
       <FarmLevelDisplay selectedFarmInfo={props.selectedFarmInfo} />
-    )
+    );
   } else {
-    return ( <div className="farm-info"><h3>No Tile Selected</h3></div> )
+    return ( <div className="farm-info"><h3>No Tile Selected</h3></div> );
   }
-}
+};
