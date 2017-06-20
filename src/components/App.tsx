@@ -1,18 +1,17 @@
 import * as React from 'react';
 
-import Menu from './Menu';
-import FarmGrid from './FarmGrid';
+import Menu from './Menu/Menu';
+import FarmGrid from './Farm/FarmGrid';
 import FarmInfo from '../classes/farmInfo';
 
-import '../styles/App.css';
+import './App.css';
 
 export default class App extends React.Component<never, never> {
   render() {
     return (
       <div>
-        <nav className="navbar"> Farm Simulator </nav>
+        <header className="navbar"> Farm Simulator </header>
         <Game />
-
       </div>
     );  
   }
@@ -34,7 +33,7 @@ class Game extends React.Component<never, GameState> {
     });
   }
 
-  handleFarmPurchaseAttempt = (farmCost: number): boolean => {
+  handleFarmPurchaseRequest = (farmCost: number): boolean => {
     return (this.state.money >= farmCost);
   }
 
@@ -59,7 +58,7 @@ class Game extends React.Component<never, GameState> {
             <div className="farm-grid">
               <FarmGrid 
                 onFarmGrowthFinish={this.handleIncomingRevenue} 
-                onFarmPurchase={this.handleFarmPurchaseAttempt}
+                onFarmPurchase={this.handleFarmPurchaseRequest}
                 onFarmPurchaseVerification={this.deductFarmCost}
                 onFarmSelection={this.handleFarmSelection} 
               />

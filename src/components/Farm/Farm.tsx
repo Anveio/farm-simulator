@@ -1,9 +1,9 @@
 import * as React from 'react';
 import FarmGrowthBar from './FarmGrowthBar';
 
-import FarmInfo from '../classes/farmInfo';
+import FarmInfo from '../../classes/farmInfo';
 
-// import Farmer from "../classes/farmer";
+import './styles/Farm.css';
 
 class MouseData { 
   constructor(readonly hovering: boolean, readonly  mouseDown: boolean) {} 

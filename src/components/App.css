@@ -1,0 +1,86 @@
+/* Typography */
+
+html, body, #root, .app-container {
+  font-family: "Calibri", Arial, sans-serif;
+  font-size: 1rem;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  text-align: center;
+}
+
+h1 { font-size: 2em; }
+h2 { font-size: 1.75em; }
+h3 { font-size: 1.5em; }
+h4 { font-size: 1.25em; }
+h5 { font-size: 1.115em; }
+p  { font-size: 1em; }
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Columns & Top-level Components */
+.navbar {
+  min-height: 25px;
+  background-color: black;
+  color: #ffffff;
+  font-size:  1em;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.game-column {
+  display: flex;
+  flex: 2;
+  order: 1;
+  background-color: #CFD8DC;
+}
+
+/* Game Column */
+
+.game-container {
+  margin: 1em auto 0 auto;
+  display: flex;
+  width: 75%;
+
+  flex-direction: column;
+
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+#game-title-container {
+  border-top: 1.5em solid #00600f;
+  border-bottom: 0.25em solid black;
+  background-color: #81C784;
+}
+
+@media (max-width: 600px) {
+  html {
+    font-size: 0.875rem;
+  }
+
+  .app-container {
+    flex-flow: column wrap;
+  }
+  .farm-grid {
+    min-height: 0;
+  }
+  .money-display {
+    border-top: 0;
+  }
+}
+
+
+
+
+
+

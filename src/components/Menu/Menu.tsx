@@ -32,7 +32,7 @@ export default class Menu extends React.Component<MenuProps, MenuState> {
             </TabPanel>
             
             <TabPanel>
-              <FarmLevelCard selectedFarmInfo={this.props.selectedFarmInfo} />
+              <FarmLevelCard farmSelection={this.props.selectedFarmInfo} />
             </TabPanel>
           </Tabs>  
         </div>

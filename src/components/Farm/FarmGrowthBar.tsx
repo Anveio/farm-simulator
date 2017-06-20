@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+import './styles/FarmGrowthBar.css';
+
 interface Props { 
   growthBarID: string; 
   growthRate: number;

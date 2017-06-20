@@ -1,6 +1,8 @@
 import * as React from 'react';
-import FarmInfo from '../classes/farmInfo';
+import FarmInfo from '../../classes/farmInfo';
 import Farm from './Farm';
+
+import './styles/FarmGrid.css';
 
 interface Props { 
   onFarmGrowthFinish(revenue: number): void; 

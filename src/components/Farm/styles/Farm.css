@@ -1,0 +1,19 @@
+.farm {
+  flex: 1;
+  background-color: #8d6e63;
+  border: 2px solid black;
+  height: 100%;
+  width: 100%;
+}
+
+.farm:hover {
+  border: 2px solid #ffff00;
+  transform: scale(1.1);
+  transition: all 0.2s cubic-bezier(.25,.8,.25,1);
+}
+
+.farm:active {
+  border: 2px solid #76ff03;
+  transform: scale(1.05);
+  transition: all 0.2s cubic-bezier(.25,.8,.25,1);
+}
