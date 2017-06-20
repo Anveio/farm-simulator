@@ -1,9 +1,7 @@
+import repo from './nameRepo';
 import Farmer from './farmer';
-import NameRepo from './nameRepo';
-import Upgrade from './upgrade';
 import Level from './level';
-
-const repo = new NameRepo;
+import Upgrade from './upgrade';
 
 export default class FarmInfo {
   public readonly farmer: Farmer;

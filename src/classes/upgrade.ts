@@ -1,4 +1,3 @@
 export default class Upgrade {
-  constructor(readonly price: number){
-  }
+  constructor(readonly price: number) {}
 }

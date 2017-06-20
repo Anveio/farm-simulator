@@ -2,14 +2,8 @@ Array.prototype.sample = function() {
   return this[Math.floor(Math.random() * this.length)];
 };
 
-export default class NameRepo {
-  // protected readonly maleFirstNames: string[] = maleFirstNamesArray;
-  // protected readonly farmerQuotes: string[] = farmerQuotesArray;
-  // protected readonly farmPrefixes: string[] = farmNamesPrefixArray;
-  // protected readonly farmSuffixes: string[] = farmNamesSuffixArray;
-  // protected readonly lastNames: string[] = lastNamesArray;
-
-  protected readonly maleFirstNames: string[] = ['Arnold', 'Chad', 'Rueben', 
+class NameRepo {
+  private readonly maleFirstNames: string[] = ['Arnold', 'Chad', 'Rueben', 
     'Chi', 'Roscoe', 'Edmundo', 'Forrest', 'Lucius', 'Andrea', 'Kirk', 'Carter', 
     'Gregory', 'Benito', 'Oswaldo', 'Hosea', 'Clinton', 'Tyron', 'Tim', 'Bennie', 
     'Seymour', 'Tod', 'Garland', 'Edison', 'Cesar', 'Malcolm', 'Trevor', 
@@ -23,7 +17,7 @@ export default class NameRepo {
     'Guillermo', 'Vicente', 'Markus', 'Ahmed', 'Kayden', 'Jamar', 'Triston', 
     'Howard', 'Jefferson', 'Axel', 'Kellen', 'Tomas', 'Cordell', 'Gavyn'];
 
-  protected readonly lastNames: string[] = ['Shultz', 'Cuevas', 'Rhodes', 
+  private readonly lastNames: string[] = ['Shultz', 'Cuevas', 'Rhodes', 
     'Mckenzie', 'Taylor', 'Glenn', 'Reilly', 'Morris', 'Herman', 'Beltran', 
     'Big', 'Swanson', 'Roth', 'Stone', 'Benton', 'Drake', 'Michael', 'Romero', 
     'Yu', 'Walls', 'Calderon', 'Shaffer', 'Moreno', 'Ibarra', 'Nichols', 
@@ -33,7 +27,7 @@ export default class NameRepo {
     'Wang', 'Acosta', 'Roberson', 'Vega', 'Crosby', 'Hall', 'Coleman', 'Luna', 
     'Greer', 'Chang', 'Moon', 'Myers', 'Wilkins', 'McLargeHuge'];
 
-  protected readonly farmNamePrefixes: string[] = [
+  private readonly farmNamePrefixes: string[] = [
     'The Frozen', 'Oakey Dokey', 'Sunset', 'Windy Willows', 'Breezy Hills', 
     'Wild Horse', 'Rolling Moss', 'Red River', 'Moonlight', 'Rolling Moss', 
     'Rock Bottom', 'Swan Lake', 'Day Break', 'Mossy Rock', 'Morning Star', 
@@ -44,20 +38,21 @@ export default class NameRepo {
     'Strawberry Valley', 'Roadrunner', 'Spring Fountain', 'Crescent Canyon', 
     'Pinewood', 'Yew Valley', 'Freedom', 'Cranberry', 'Rosewood', 'Mistwood', 
     'Blackwater', 'Mooseridge', 'Sleeping Hills', 'Riverrock', 'Wildflower', 
-    'Mystic Hill'
-  ];
+    'Mystic Hill'];
 
-  protected readonly farmNameSuffixes: string[] = [
+  private readonly farmNameSuffixes: string[] = [
     'Ranch', 'Estate', 'Acres', 'Gardens', 'Fields', 'Meadow', 'Grange', 'Nursey', 
     'Range', 'Pastures', 'Orchard', 'Farmstead', 'Vineyard', 'Farm', 'Homestead', 
     'Plantation'
   ];
 
-  protected readonly farmerQuotes: string[] = [
+  private readonly farmerQuotes: string[] = [
     'I\'m beginning to feel like a Farm God.',
     'Please just don\'t bother me.',
     'I\'m not like those other farmers.',
     'Work, work.',
+    'What task is there?',
+    'Life is potato. I have potato blood in my veins.',
     'Something need doing?',
     'I would work faster but...',
     'It is only the farmer who faithfully plants seeds in the Spring, who reaps a harvest in the Autumn.',
@@ -88,3 +83,6 @@ export default class NameRepo {
     return this.farmNamePrefixes.sample() + ' ' + this.farmNameSuffixes.sample();
   }
 }
+
+const repo = Object.freeze(new NameRepo());
+export default repo;

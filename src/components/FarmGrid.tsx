@@ -2,30 +2,37 @@ import * as React from 'react';
 import FarmInfo from '../classes/farmInfo';
 import Farm from './Farm';
 
-interface FarmGridProps { 
+interface Props { 
   onFarmGrowthFinish(revenue: number): void; 
   onFarmPurchase(farmCost: number): boolean;
   onFarmPurchaseVerification(farmCost: number): void;
   onFarmSelection(farmInfo: FarmInfo): void; 
 }
 
-export default class FarmGrid extends React.PureComponent<FarmGridProps, { farms: number } > {
-  constructor(props: FarmGridProps) {
+interface State {
+  farms: number;
+}
+
+export default class FarmGrid extends React.PureComponent<Props, State > {
+  constructor(props: Props) {
     super(props);
     this.state = {
       farms: 9
     };
+
+    // ES2017 Class method syntax means you dont have to bind in the constructor
+    // See https://daveceddia.com/react-best-alternative-bind-render/
   }
 
-  handleFarmGrowthBarFinish = (revenue: number): void => {
+  readonly handleFarmGrowthBarFinish = (revenue: number): void => {
     this.props.onFarmGrowthFinish(revenue);
   }
 
-  handleFarmSelection = (farmInfo: FarmInfo): void => {
+  readonly handleFarmSelection = (farmInfo: FarmInfo): void => {
     this.props.onFarmSelection(farmInfo);
   }
 
-  buildFarmGrid = (farmsToCreate: number): JSX.Element[] => {
+  readonly buildFarmGrid = (farmsToCreate: number): JSX.Element[] => {
     let createdFarms: JSX.Element[] = [];
 
     for (let i = 0; i < farmsToCreate; i++) {
@@ -43,7 +50,7 @@ export default class FarmGrid extends React.PureComponent<FarmGridProps, { farms
     return createdFarms;
   }
 
-  calculateFarmCost = (): number => {
+  readonly calculateFarmCost = (): number => {
     const baseCost: number = 350;
     const coEf: number = 1.65;
 
@@ -51,7 +58,7 @@ export default class FarmGrid extends React.PureComponent<FarmGridProps, { farms
     return (baseCost * (Math.pow(coEf, this.state.farms)));
   }
 
-  addFarmToFarmGrid = (e: React.MouseEvent<HTMLButtonElement>): void => {
+  readonly addFarmToFarmGrid = (e: React.MouseEvent<HTMLButtonElement>): void => {
     e.preventDefault(); // Maybe not necessary
     const farmCost = this.calculateFarmCost();
 
@@ -63,7 +70,7 @@ export default class FarmGrid extends React.PureComponent<FarmGridProps, { farms
     }
   }
 
-  render() {
+  public render() {
     const formattedFarmCost = () => {
       const cost = this.calculateFarmCost();
       const formatLargeNum = (largeNum: number): string => {
