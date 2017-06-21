@@ -9,10 +9,10 @@ import './App.css';
 export default class App extends React.Component<never, never> {
   render() {
     return (
-      <div>
-        <header className="navbar"> Farm Simulator </header>
+      <main className="farmingbaron">
+        {/*<nav className="side-nav"> Farm Simulator </nav>*/}
         <Game />
-      </div>
+      </main>
     );  
   }
 }

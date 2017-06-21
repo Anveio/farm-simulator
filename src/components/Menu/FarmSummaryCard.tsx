@@ -17,17 +17,17 @@ export const FarmSummaryCard = ( { farmSelection }: Props) => {
         <h2>{farmInfo.farmName}</h2>
       </div>
       <div className="farm-stats-container">
-        <h3> 
+        <h3 className="left-header"> 
           Level: {farmLevel.currentLevel}
           <span className="level-exp-info">
             ({farmLevel.expCurrent.toFixed(2)} / {farmLevel.expReq.toFixed(2)})
           </span>
         </h3>
 
-        <h3 className="farm-efficiency">
+        <h3 className="left-header farm-efficiency">
           Speed: {farmInfo.farmer.efficiency}
         </h3>
-        <h3 className="farm-revenue">
+        <h3 className="left-header farm-revenue">
           Profit: ${farmInfo.getTotalRevenue().toFixed(2)}
         </h3>
       </div>

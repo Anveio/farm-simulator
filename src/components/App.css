@@ -7,6 +7,8 @@ html, body, #root, .app-container {
   padding: 0;
 }
 
+.farmingbaron { height: 100vh; display: flex;}
+
 h1, h2, h3, h4, h5, h6 {
   text-align: center;
 }
@@ -25,7 +27,7 @@ ul {
 }
 
 /* Columns & Top-level Components */
-.navbar {
+.side-nav {
   min-height: 25px;
   background-color: black;
   color: #ffffff;
@@ -35,6 +37,7 @@ ul {
 .app-container {
   display: flex;
   flex-direction: row;
+  height: 100%;
   width: 100%;
 }
 
@@ -42,6 +45,8 @@ ul {
   display: flex;
   flex: 2;
   order: 1;
+
+  height: 100%;
   background-color: #CFD8DC;
 }
 
